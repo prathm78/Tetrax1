@@ -64,43 +64,62 @@ export async function callGemini({ system, messages, image, tier = 'default', js
     throw err;
   }
 
-  const model = tier === 'quick' ? config.modelQuick : config.modelDefault;
+  const primaryModel = tier === 'quick' ? config.modelQuick : config.modelDefault;
+  const candidateModels = [primaryModel, 'gemini-3.5-flash', 'gemini-3.5-flash-lite'].filter((m, idx, arr) => arr.indexOf(m) === idx);
   const payload = buildGeminiPayload({ system, messages, image, json });
 
-  const endpoint = stream
-    ? `${GEMINI_BASE_URL}/${model}:streamGenerateContent?alt=sse`
-    : `${GEMINI_BASE_URL}/${model}:generateContent`;
-
   let response;
-  try {
-    response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': config.geminiApiKey
-      },
-      body: JSON.stringify(payload)
-    });
-  } catch (netErr) {
-    console.error('[Gemini Service] Network error calling Gemini:', netErr.message);
-    const err = new Error('Failed to reach Gemini API.');
-    err.status = 502;
-    err.code = 'ai_failed';
-    throw err;
-  }
+  let lastErrStatus = 500;
+  let lastErrBody = '';
 
-  if (!response.ok) {
-    const status = response.status;
-    let errBody = '';
+  for (const model of candidateModels) {
+    const endpoint = stream
+      ? `${GEMINI_BASE_URL}/${model}:streamGenerateContent?alt=sse`
+      : `${GEMINI_BASE_URL}/${model}:generateContent`;
+
     try {
-      errBody = await response.text();
+      response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': config.geminiApiKey
+        },
+        body: JSON.stringify(payload)
+      });
+    } catch (netErr) {
+      console.error('[Gemini Service] Network error calling Gemini:', netErr.message);
+      const err = new Error('Failed to reach Gemini API.');
+      err.status = 502;
+      err.code = 'ai_failed';
+      throw err;
+    }
+
+    if (response.ok) {
+      break;
+    }
+
+    lastErrStatus = response.status;
+    lastErrBody = '';
+    try {
+      lastErrBody = await response.text();
     } catch (_) {}
 
-    console.error(`[Gemini Service] Upstream error HTTP ${status}:`, errBody);
+    console.warn(`[Gemini Service] Model "${model}" returned HTTP ${lastErrStatus}.`);
 
-    if (status === 404) {
-      console.warn(`[Gemini Service] Model "${model}" returned 404 Not Found. Please update MODEL_QUICK / MODEL_DEFAULT in your .env file.`);
+    // If 404 (model not found) or 503 (high demand spike), try next candidate model
+    if (lastErrStatus === 404 || lastErrStatus === 503) {
+      console.warn(`[Gemini Service] Attempting fallback model...`);
+      continue;
     }
+
+    // For other errors like 429 or 400 (safety), don't fallback
+    break;
+  }
+
+  if (!response || !response.ok) {
+    const status = lastErrStatus;
+    const errBody = lastErrBody;
+    console.error(`[Gemini Service] Final upstream error HTTP ${status}:`, errBody);
 
     const err = new Error('Gemini request failed.');
     if (status === 429) {

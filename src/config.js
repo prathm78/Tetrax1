@@ -7,6 +7,6 @@ export const config = {
   port: parseInt(process.env.PORT || '3000', 10),
   geminiApiKey: isPlaceholder ? '' : rawKey,
   isKeyConfigured: !isPlaceholder,
-  modelQuick: process.env.MODEL_QUICK || 'gemini-2.5-flash',
-  modelDefault: process.env.MODEL_DEFAULT || 'gemini-2.5-flash'
+  modelQuick: process.env.MODEL_QUICK || 'gemini-3.5-flash-lite',
+  modelDefault: process.env.MODEL_DEFAULT || 'gemini-3.5-flash'
 };
