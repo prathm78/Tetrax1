@@ -1,0 +1,33 @@
+{
+  "name": "samavesh-ai",
+  "version": "1.0.0",
+  "description": "Samavesh AI - AI that works the way you do. An accessible, multilingual AI assistant.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "multilingual",
+    "gemini",
+    "ai",
+    "wcag"
+  ],
+  "author": "Samavesh Team",
+  "license": "MIT",
+  "dependencies": {
+    "compression": "^1.8.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.13"
+  }
+}

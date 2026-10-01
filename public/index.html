@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Samavesh AI: AI that works the way you do</title>
+  <meta name="description" content="An accessible, multilingual AI assistant built so that everyone can use AI: people with disabilities, low literacy, and non-English speakers.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#050914">
+
+  <!-- Open Graph & Twitter Meta -->
+  <meta property="og:title" content="Samavesh AI: AI that works the way you do">
+  <meta property="og:description" content="Accessible, Multilingual AI assistant with voice reading, simple explanations, document analysis, and WCAG web checks.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/favicon.svg">
+  <meta name="twitter:card" content="summary">
+
+  <!-- Google Fonts Preconnect & Stylesheets -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Schibsted+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@400;600;700&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS Design System -->
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/themes.css">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Samavesh AI",
+    "description": "Accessible, multilingual AI assistant designed for people with disabilities, low literacy, and non-English speakers.",
+    "applicationCategory": "AccessibilityApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+</head>
+<body>
+  <!-- SVG Filter & Symbol Definitions -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="f-pro"><feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0"/></filter>
+      <filter id="f-deu"><feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0"/></filter>
+      <filter id="f-tri"><feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.433 0.567 0 0  0 0.475 0.525 0 0  0 0 0 1 0"/></filter>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12Z"/></symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-ear" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 1 11 3.3c-1.2 1.4-2 2.2-2 4.2a3 3 0 0 1-5.6 1.5M9 9a3 3 0 0 1 6 0"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.2 8 8 9 4.8-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></symbol>
+      <symbol id="i-type" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></symbol>
+      <symbol id="i-cam" viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h2l2-2h6l2 2h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Z"/><circle cx="12" cy="13" r="4"/></symbol>
+      <symbol id="i-vol" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></symbol>
+      <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v12m0 0-4-4m4 4 4-4M5 20h14"/></symbol>
+      <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4 20-7Z"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+      <symbol id="i-wand" viewBox="0 0 24 24"><path d="m4 20 11-11M14 4v3M20 10h-3M18 4l-1.5 1.5M5 5l1.5 1.5"/></symbol>
+      <symbol id="i-mark" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="3.5" stroke-dasharray="64 18" stroke-linecap="round" transform="rotate(-50 16 16)"/><circle cx="16" cy="16" r="4.5" fill="#FFB020"/></symbol>
+    </defs>
+  </svg>
+
+  <div id="page">
+    <a class="skip" href="#main">Skip to main content</a>
+
+    <!-- Top Sticky Bar -->
+    <header class="top dk">
+      <div class="wrap">
+        <a class="brand" href="#top" aria-label="Samavesh AI, home">
+          <svg aria-hidden="true"><use href="#i-mark"/></svg>
+          <span>Samavesh AI</span>
+        </a>
+        <nav aria-label="Primary">
+          <a href="#try" data-i="nTry">Try it</a>
+          <a href="#why" data-i="nWhy">Why Samavesh</a>
+          <a href="#how" data-i="nHow">How it works</a>
+        </nav>
+        <span class="sp"></span>
+        <div class="lang" role="group" aria-label="Quick language switcher">
+          <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="hi" lang="hi" aria-pressed="false">हिंदी</button>
+          <button type="button" data-lang="mr" lang="mr" aria-pressed="false">मराठी</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Hero Section -->
+      <div class="hero dk" id="top">
+        <div class="wrap">
+          <div>
+            <h1 data-i="h1">AI that works the way you do.</h1>
+          </div>
+          <div>
+            <p class="lead" data-i="lead">Talk, type or show a photo. Get answers in simple words, in your language, read aloud.</p>
+            <div class="modes" aria-label="Ways to use Samavesh">
+              <span class="mode"><svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>Speak</span>
+              <span class="mode"><svg class="i" aria-hidden="true"><use href="#i-type"/></svg>Type</span>
+              <span class="mode"><svg class="i" aria-hidden="true"><use href="#i-cam"/></svg>Show a photo</span>
+              <span class="mode"><svg class="i" aria-hidden="true"><use href="#i-vol"/></svg>Listen</span>
+            </div>
+            <div class="actions">
+              <a class="btn gold" href="#try" data-i="cta">Try it now</a>
+              <a class="btn dkb" href="#why" data-i="cta2">Why people use it</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Workbench Area -->
+      <div class="wrap bw" id="try">
+        <div class="stat" id="aiStat" role="status">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="aiTxt">Checking AI connection…</span>
+          <small id="aiSub"></small>
+        </div>
+
+        <div class="bench">
+          <!-- Settings Drawer -->
+          <details class="set" id="setBox" open>
+            <summary data-i="setT">Make it work for you</summary>
+            <div class="setb">
+              <div class="c">
+                <label class="l" for="selLang" data-i="lblLang">My language</label>
+                <select class="sel" id="selLang"></select>
+              </div>
+
+              <div class="c">
+                <div class="l" id="lLv" data-i="lblLv">Reading level</div>
+                <div class="seg" role="group" aria-labelledby="lLv" id="lvSeg">
+                  <button type="button" data-v="0" aria-pressed="true">Normal</button>
+                  <button type="button" data-v="1" aria-pressed="false">Simple</button>
+                  <button type="button" data-v="2" aria-pressed="false">Very simple</button>
+                </div>
+              </div>
+
+              <div class="c">
+                <label class="l" for="auto">
+                  Read answers aloud automatically
+                  <span class="sw"><input id="auto" type="checkbox" role="switch"><i></i></span>
+                </label>
+              </div>
+
+              <div class="c">
+                <div class="l" id="lSp">Voice speed</div>
+                <div class="seg" role="group" aria-labelledby="lSp" id="spSeg">
+                  <button type="button" data-v="0" aria-pressed="false">Slow</button>
+                  <button type="button" data-v="1" aria-pressed="true">Normal</button>
+                  <button type="button" data-v="2" aria-pressed="false">Fast</button>
+                </div>
+              </div>
+
+              <div class="c">
+                <label class="l" for="fsz">Text size <output id="fszo" for="fsz">100%</output></label>
+                <input id="fsz" type="range" min="90" max="200" step="5" value="100">
+              </div>
+
+              <div class="c">
+                <div class="l" id="lTh">Theme</div>
+                <div class="seg" role="group" aria-labelledby="lTh" id="thSeg">
+                  <button type="button" data-v="auto" aria-pressed="true">Auto</button>
+                  <button type="button" data-v="light" aria-pressed="false">Light</button>
+                  <button type="button" data-v="dark" aria-pressed="false">Dark</button>
+                  <button type="button" data-v="yellow" aria-pressed="false">Yellow on black</button>
+                </div>
+              </div>
+
+              <div class="c">
+                <label class="l" for="selCb">Colour vision</label>
+                <select class="sel" id="selCb">
+                  <option value="none">Normal</option>
+                  <option value="pro">Protanopia</option>
+                  <option value="deu">Deuteranopia</option>
+                  <option value="tri">Tritanopia</option>
+                  <option value="grey">Greyscale</option>
+                </select>
+              </div>
+
+              <div class="c">
+                <label class="l" for="dys">
+                  Dyslexia-friendly text
+                  <span class="sw"><input id="dys" type="checkbox" role="switch"><i></i></span>
+                </label>
+              </div>
+
+              <div class="c">
+                <label class="l" for="mot">
+                  Reduce motion
+                  <span class="sw"><input id="mot" type="checkbox" role="switch"><i></i></span>
+                </label>
+              </div>
+
+              <div class="c">
+                <button class="btn sm" id="rst" type="button">Reset settings</button>
+              </div>
+
+              <p class="note">Settings are saved on this device only.</p>
+            </div>
+          </details>
+
+          <!-- Main Tool Area -->
+          <div class="mainp">
+            <div class="tabs" role="tablist" aria-label="Tools" id="tabs">
+              <button class="tab" role="tab" id="tab-ask" aria-controls="p-ask" aria-selected="true"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg><span data-i="tAsk">Ask</span></button>
+              <button class="tab" role="tab" id="tab-doc" aria-controls="p-doc" aria-selected="false" tabindex="-1"><svg class="i" aria-hidden="true"><use href="#i-doc"/></svg><span data-i="tDoc">Documents</span></button>
+              <button class="tab" role="tab" id="tab-photo" aria-controls="p-photo" aria-selected="false" tabindex="-1"><svg class="i" aria-hidden="true"><use href="#i-eye"/></svg><span data-i="tPhoto">Photos</span></button>
+              <button class="tab" role="tab" id="tab-cap" aria-controls="p-cap" aria-selected="false" tabindex="-1"><svg class="i" aria-hidden="true"><use href="#i-ear"/></svg><span data-i="tCap">Captions</span></button>
+              <button class="tab" role="tab" id="tab-web" aria-controls="p-web" aria-selected="false" tabindex="-1"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg><span data-i="tWeb">Website check</span></button>
+            </div>
+
+            <!-- TAB 1: ASK -->
+            <div class="panel" id="p-ask" role="tabpanel" aria-labelledby="tab-ask">
+              <h2 data-i="askH">Ask anything</h2>
+              <p class="sub" data-i="askS">Speak or type in your language. Answers come back short and clear.</p>
+              <div class="log" id="log" role="log" aria-live="polite" aria-label="Conversation">
+                <div class="empty" id="askEmpty">
+                  <b>Not sure what to ask?</b>Start with one of these.
+                  <div class="starters" id="starters"></div>
+                </div>
+              </div>
+              <div class="comp">
+                <label class="sr" for="askIn">Your question</label>
+                <textarea id="askIn" data-ip="askPh" placeholder="Type your question, or press Speak"></textarea>
+                <div class="crow">
+                  <button class="btn sm mic" id="askMic" type="button" aria-pressed="false">
+                    <svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>
+                    <span data-i="speak">Speak</span>
+                  </button>
+                  <span class="hint" id="askHint"></span>
+                  <span class="sp"></span>
+                  <button class="btn sm" id="askStop" type="button" hidden>
+                    <svg class="i" aria-hidden="true"><use href="#i-stop"/></svg>Stop
+                  </button>
+                  <button class="btn gold sm" id="askGo" type="button">
+                    <svg class="i" aria-hidden="true"><use href="#i-send"/></svg>
+                    <span data-i="send">Ask</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: DOCUMENTS -->
+            <div class="panel" id="p-doc" role="tabpanel" aria-labelledby="tab-doc" hidden>
+              <h2 data-i="docH">Understand a letter or form</h2>
+              <p class="sub" data-i="docS">Paste the text or add a photo. You get what it says, what to do, and the hard words explained.</p>
+              <div class="comp">
+                <label class="sr" for="docIn">Paste document text</label>
+                <textarea id="docIn" placeholder="Paste the text of a letter, bill, notice or medical report here"></textarea>
+                <div class="crow">
+                  <button class="btn sm" id="docEx" type="button">Use an example letter</button>
+                  <label class="btn sm" for="docFile"><svg class="i" aria-hidden="true"><use href="#i-cam"/></svg>Add a photo</label>
+                  <input class="sr" type="file" id="docFile" accept="image/jpeg,image/png,image/webp">
+                  <span class="hint" id="docFn"></span>
+                  <span class="sp"></span>
+                  <button class="btn gold sm" id="docGo" type="button">
+                    <svg class="i" aria-hidden="true"><use href="#i-wand"/></svg>Explain it
+                  </button>
+                </div>
+              </div>
+              <div class="res" id="docOut" aria-live="polite"></div>
+            </div>
+
+            <!-- TAB 3: PHOTOS -->
+            <div class="panel" id="p-photo" role="tabpanel" aria-labelledby="tab-photo" hidden>
+              <h2 data-i="phH">Describe a photo</h2>
+              <p class="sub" data-i="phS">Get a clear description, any text in the picture, and alt text you can use on a website.</p>
+              <div class="drop" id="phDrop"><span id="phMsg">No photo yet (drag & drop here)</span></div>
+              <div class="crow" style="margin-top:12px">
+                <label class="btn sm" for="phFile"><svg class="i" aria-hidden="true"><use href="#i-cam"/></svg>Choose or take a photo</label>
+                <input class="sr" type="file" id="phFile" accept="image/jpeg,image/png,image/webp" capture="environment">
+                <button class="btn sm" id="phEx" type="button">Use a sample photo</button>
+                <span class="sp"></span>
+                <button class="btn gold sm" id="phGo" type="button">
+                  <svg class="i" aria-hidden="true"><use href="#i-eye"/></svg>Describe it
+                </button>
+              </div>
+              <div class="res" id="phOut" aria-live="polite"></div>
+            </div>
+
+            <!-- TAB 4: CAPTIONS -->
+            <div class="panel" id="p-cap" role="tabpanel" aria-labelledby="tab-cap" hidden>
+              <h2 data-i="capH">Live captions</h2>
+              <p class="sub" data-i="capS">Turn speech into large, readable text as people talk. Uses your microphone and the language you chose.</p>
+              <div class="cbig" id="capBox" data-ph="Captions will appear here." aria-live="off" role="region" aria-label="Captions screen" tabindex="0"></div>
+              <div class="crow" style="margin-top:12px">
+                <button class="btn gold sm" id="capGo" type="button">
+                  <svg class="i" aria-hidden="true"><use href="#i-mic"/></svg><span>Start captions</span>
+                </button>
+                <button class="btn sm" id="capSample" type="button">Play sample captions</button>
+                <button class="btn sm" id="capClear" type="button">Clear</button>
+                <span class="sp"></span>
+                <button class="btn sm" id="capCopy" type="button">
+                  <svg class="i" aria-hidden="true"><use href="#i-copy"/></svg>Copy
+                </button>
+                <button class="btn sm" id="capSave" type="button">
+                  <svg class="i" aria-hidden="true"><use href="#i-down"/></svg>Download .txt
+                </button>
+              </div>
+              <p class="note" id="capNote"></p>
+            </div>
+
+            <!-- TAB 5: WEBSITE CHECK -->
+            <div class="panel" id="p-web" role="tabpanel" aria-labelledby="tab-web" hidden>
+              <h2 data-i="webH">Check a website for barriers</h2>
+              <p class="sub" data-i="webS">Paste HTML or enter a URL. Samavesh finds accessibility problems, scores the page, and writes a fixed version.</p>
+
+              <!-- Optional URL Fetch bar -->
+              <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+                <label class="sr" for="webUrl">Website URL to inspect</label>
+                <input class="sel" id="webUrl" style="flex:1;min-width:240px;margin-top:0" placeholder="https://example.com" type="url">
+                <button class="btn sm" id="webFetch" type="button">Fetch URL</button>
+              </div>
+
+              <div class="comp">
+                <label class="sr" for="webIn">HTML code to audit</label>
+                <textarea class="mono" id="webIn" spellcheck="false" placeholder="Paste HTML code here, or enter a URL above"></textarea>
+                <div class="crow">
+                  <button class="btn sm" id="webEx" type="button">Use example page</button>
+                  <span class="sp"></span>
+                  <button class="btn gold sm" id="webGo" type="button">
+                    <svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Check page
+                  </button>
+                </div>
+              </div>
+              <div class="res" id="webOut" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+        <p class="note">Powered by Google Gemini API. Connect your GEMINI_API_KEY in .env to enable live AI. Do not paste private or sensitive information.</p>
+      </div>
+
+      <!-- SECTION: Why people use Samavesh -->
+      <section class="s" id="why" aria-labelledby="whyH">
+        <div class="wrap">
+          <div class="sh">
+            <h2 id="whyH" data-i="whyH">Why people use Samavesh</h2>
+            <p data-i="whyP">Most AI assumes you can type fluent English, read long text and use a mouse. Real people don't all work that way. Pick a situation to try it.</p>
+          </div>
+          <ul class="why" id="whyList"></ul>
+        </div>
+      </section>
+
+      <!-- SECTION: What is different -->
+      <section class="s" aria-labelledby="cmpH">
+        <div class="wrap">
+          <div class="sh">
+            <h2 id="cmpH">What is different</h2>
+            <p>Many AI chatbots make you adapt to them. Samavesh adapts to you.</p>
+          </div>
+          <div class="cmpw">
+            <table class="cmp">
+              <caption class="sr">Comparison between standard AI chatbots and Samavesh</caption>
+              <thead>
+                <tr>
+                  <th scope="col">&nbsp;</th>
+                  <th scope="col">Standard AI chatbots</th>
+                  <th scope="col">Samavesh</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>How you ask</td>
+                  <td>Mostly typing</td>
+                  <td>Speak, type, or show a photo</td>
+                </tr>
+                <tr>
+                  <td>Language</td>
+                  <td>Best in English</td>
+                  <td>English and seven Indian languages, with voice in each where your device supports it</td>
+                </tr>
+                <tr>
+                  <td>How long and hard the answer is</td>
+                  <td>Same for everyone</td>
+                  <td>You choose: Normal, Simple or Very simple</td>
+                </tr>
+                <tr>
+                  <td>How you get the answer</td>
+                  <td>A block of text</td>
+                  <td>Short text, read aloud, big type, your colours and font</td>
+                </tr>
+                <tr>
+                  <td>Everyday paperwork</td>
+                  <td>You must know what to ask</td>
+                  <td>Paste a letter and get what it says and what to do</td>
+                </tr>
+                <tr>
+                  <td>Builders</td>
+                  <td>Not their focus</td>
+                  <td>Built-in WCAG check with an AI-fixed version of your page</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: How it works -->
+      <section class="s" id="how" aria-labelledby="howH">
+        <div class="wrap">
+          <div class="sh">
+            <h2 id="howH" data-i="howH">How it works</h2>
+          </div>
+          <ol class="steps">
+            <li>
+              <h3>Set it up for you</h3>
+              <p>Choose your language, reading level, text size and colours. This takes under a minute and is remembered on your device.</p>
+            </li>
+            <li>
+              <h3>Speak, type or show</h3>
+              <p>Ask a question, paste a letter, add a photo, or turn on captions for a conversation.</p>
+            </li>
+            <li>
+              <h3>Get it your way</h3>
+              <p>Read a short answer, or have it read aloud. Ask again in simpler words as many times as you like.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Facts Band -->
+      <div class="dkband dk">
+        <div class="wrap">
+          <div class="facts">
+            <div>
+              <b>1.3 billion</b>
+              <span>people live with a significant disability, about 1 in 6 worldwide.</span>
+              <cite>WHO</cite>
+            </div>
+            <div>
+              <b>About 95%</b>
+              <span>of home pages have detectable accessibility failures.</span>
+              <cite>WebAIM Million</cite>
+            </div>
+            <div>
+              <b>2.68 crore</b>
+              <span>disabled people in India. The true figure is widely thought to be higher.</span>
+              <cite>Census of India, 2011</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dk">
+      <div class="wrap">
+        <div>
+          <strong>Samavesh AI</strong>
+          <p>समावेश means inclusion. Built toward WCAG 2.2 AA standards.</p>
+        </div>
+        <div>
+          <p>Shortcuts: <kbd>Alt</kbd> + <kbd>1</kbd> to <kbd>5</kbd> switch tool · <kbd>Ctrl</kbd> + <kbd>Enter</kbd> send</p>
+          <p>AI can make mistakes. Always check important medical, financial, or legal information.</p>
+        </div>
+
+        <!-- Accessibility Statement Section in Footer -->
+        <div class="a11y-stmt" id="accessibility">
+          <details>
+            <summary>Accessibility Statement & Standards Compliance</summary>
+            <div class="a11y-stmt-body">
+              <p>Samavesh AI is committed to digital inclusion and is built according to the <strong>Web Content Accessibility Guidelines (WCAG) 2.2 Level AA</strong>.</p>
+              <ul style="margin: 8px 0 8px 20px; list-style: disc;">
+                <li>Full keyboard navigation with visible focus rings across all themes.</li>
+                <li>Support for screen readers via ARIA live regions and semantic landmarks.</li>
+                <li>Dyslexia-friendly typography with custom font spacing and line-heights.</li>
+                <li>Multiple high-contrast themes including Yellow-on-Black and SVG color-blindness simulation filters.</li>
+                <li>Speech recognition in 8 Indian regional languages.</li>
+              </ul>
+              <p>If you experience any barriers using this website, please report them to us so we can continue improving accessibility for everyone.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Main ES Module Script -->
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

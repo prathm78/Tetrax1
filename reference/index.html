@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Samavesh AI: AI that works the way you do</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Schibsted+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@400;600;700&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F8FB;--surface:#FFFFFF;--sunken:#EDF1F7;--line:#D9E1EC;
+  --ink:#0B1226;--muted:#46536A;--gold:#FFB020;--goldtx:#8A5A00;--ongold:#0B1226;
+  --green:#0B7A6D;--red:#C9263B;--redbg:#FDECEE;--greenbg:#E3F5F2;--goldbg:#FFF3D6;
+  --n0:#050914;--n1:#0A1122;--n2:#10192F;--n3:#1B2744;--nm:#9DAAC6;--ngold:#FFB84D;
+  --fs:1;--lh:1.65;--ls:0em;--ws:0em;
+  --body:'Atkinson Hyperlegible','Noto Sans Devanagari',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --head:'Schibsted Grotesk','Noto Sans Devanagari','Atkinson Hyperlegible',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]):not([data-theme="yellow"]){
+    --paper:#080D1B;--surface:#0E162B;--sunken:#0B1224;--line:#26324F;--ink:#F2F5FA;--muted:#A9B5CC;--gold:#FFB84D;--goldtx:#FFB84D;
+    --green:#3DD6C0;--red:#FF7A8A;--redbg:#3A1620;--greenbg:#0F2B2B;--goldbg:#2E2410;
+  }
+}
+:root[data-theme="dark"]{--paper:#080D1B;--surface:#0E162B;--sunken:#0B1224;--line:#26324F;--ink:#F2F5FA;--muted:#A9B5CC;--gold:#FFB84D;--goldtx:#FFB84D;--green:#3DD6C0;--red:#FF7A8A;--redbg:#3A1620;--greenbg:#0F2B2B;--goldbg:#2E2410}
+:root[data-theme="yellow"]{--paper:#000;--surface:#000;--sunken:#0A0A0A;--line:#FFE600;--ink:#FFE600;--muted:#FFF;--gold:#FFE600;--goldtx:#FFE600;--ongold:#000;--green:#00FFD0;--red:#FF9AA5;--redbg:#1a0004;--greenbg:#001a14;--goldbg:#1a1700}
+*,*::before,*::after{box-sizing:inherit}
+html{font-size:calc(100% * var(--fs));scroll-padding-top:calc(84px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:var(--lh);letter-spacing:var(--ls);word-spacing:var(--ws);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.dys{--body:'Lexend','Noto Sans Devanagari',sans-serif;--ls:.035em;--lh:1.9;--ws:.12em}
+body.still *,body.still *::before,body.still *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+h1,h2,h3,h4{font-family:var(--head);margin:0;line-height:1.1;font-weight:700;letter-spacing:-.025em}
+p{margin:0}a{color:inherit}ul,ol,dl,dd{margin:0;padding:0}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px var(--gold);border-radius:6px}
+.dk :focus-visible{outline-color:#fff}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-70px;z-index:300;background:var(--gold);color:var(--ongold);padding:12px 18px;border-radius:6px;font-weight:700}
+.skip:focus{top:calc(10px + env(safe-area-inset-top,0px))}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+svg.i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 20px;border-radius:10px;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;border:1.5px solid var(--ink);background:var(--surface);color:var(--ink);transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--ongold)}
+.btn.sm{min-height:44px;padding:0 14px;font-size:.93rem}
+.btn.dkb{background:transparent;border-color:var(--n3);color:#fff}
+.btn.dkb:hover{background:var(--n2)}
+
+/* top */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:rgba(5,9,20,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--n3);color:#F2F5FA}
+.top .wrap{display:flex;align-items:center;gap:6px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--head);font-weight:800;font-size:1.2rem;letter-spacing:-.02em;margin-right:22px}
+.brand svg{width:30px;height:30px;color:#fff}
+.top nav{display:flex;gap:2px}
+.top nav a{min-height:44px;display:flex;align-items:center;padding:0 13px;border-radius:8px;text-decoration:none;color:var(--nm);font-size:.96rem;font-weight:700}
+.top nav a:hover{color:#fff;background:var(--n2)}
+.sp{flex:1}
+.lang{display:flex;border:1px solid var(--n3);border-radius:8px;background:var(--n1);overflow:hidden}
+.lang button{min-width:44px;min-height:42px;border:0;background:transparent;color:var(--nm);font:inherit;font-size:.9rem;cursor:pointer;padding:0 8px}
+.lang button[aria-pressed="true"]{background:#fff;color:#0B1226;font-weight:700}
+@media(max-width:900px){.top nav{display:none}}
+@media(max-width:560px){.brand span{display:none}.brand{margin-right:0}}
+
+/* hero */
+.hero{background:var(--n0);color:#F2F5FA;position:relative;overflow:hidden;padding:76px 0 150px}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(157,170,198,.2) 1px,transparent 1px);background-size:28px 28px;-webkit-mask-image:radial-gradient(ellipse 80% 80% at 30% 20%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse 80% 80% at 30% 20%,#000 20%,transparent 75%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:end}
+@media(max-width:940px){.hero .wrap{grid-template-columns:1fr;gap:28px}}
+h1{font-size:clamp(2.6rem,6vw,5.2rem);font-weight:800;letter-spacing:-.045em;line-height:1;max-width:13ch}
+.lead{font-size:1.25rem;color:var(--nm);max-width:46ch}
+.modes{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.mode{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--n3);background:var(--n1);border-radius:999px;padding:8px 16px;font-size:.95rem;font-weight:700}
+.mode svg{color:var(--ngold);width:18px;height:18px}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+
+/* workbench */
+.bw{margin-top:-96px;position:relative;z-index:2}
+.stat{display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:700;margin-bottom:12px;color:#F2F5FA;flex-wrap:wrap}
+.stat .dot{width:9px;height:9px;border-radius:50%;background:var(--nm)}
+.stat.on .dot{background:#5EEAD4}.stat.demo .dot{background:var(--ngold)}
+.stat small{font-weight:400;color:var(--nm)}
+.bench{display:grid;grid-template-columns:300px 1fr;border:1px solid var(--line);border-radius:20px;background:var(--surface);overflow:hidden;box-shadow:0 50px 100px -40px rgba(0,0,0,.55)}
+@media(max-width:940px){.bench{grid-template-columns:1fr}}
+details.set{background:var(--paper);border-right:1px solid var(--line)}
+@media(max-width:940px){details.set{border-right:0;border-bottom:1px solid var(--line)}}
+details.set > summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;min-height:56px;padding:0 22px;font-family:var(--head);font-weight:700;font-size:1.1rem}
+details.set > summary::-webkit-details-marker{display:none}
+details.set > summary::after{content:"+";font-size:1.4rem;color:var(--muted)}
+details.set[open] > summary::after{content:"−"}
+.setb{padding:0 22px 22px}
+.c{padding:14px 0;border-top:1px solid var(--line)}
+.c .l{display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:700;font-size:.95rem;min-height:36px}
+.c output{font-family:var(--mono);font-size:.82rem;color:var(--muted)}
+.c input[type=range]{width:100%;height:32px;accent-color:var(--ink)}
+.sel{width:100%;min-height:48px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:0 12px;font:inherit;margin-top:4px}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.seg button{min-height:44px;padding:0 12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;font:inherit;font-size:.9rem;cursor:pointer}
+.seg button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper);font-weight:700}
+.sw{position:relative;width:52px;height:30px;flex:none}
+.sw input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:2}
+.sw i{position:absolute;inset:0;border-radius:999px;background:var(--line);border:1.5px solid var(--ink);transition:.15s}
+.sw i::after{content:"";position:absolute;left:3px;top:3px;width:21px;height:21px;border-radius:50%;background:var(--ink);transition:.15s}
+.sw input:checked + i{background:var(--gold)}
+.sw input:checked + i::after{transform:translateX(22px)}
+.sw input:focus-visible + i{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px var(--gold)}
+.mainp{min-width:0;display:flex;flex-direction:column}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);padding:10px 14px 0;overflow-x:auto}
+.tab{min-height:50px;padding:0 16px;border:0;border-bottom:3px solid transparent;background:transparent;font:inherit;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold)}
+.panel{padding:24px;min-width:0}
+.panel > h2{font-size:1.5rem}
+.panel > .sub{color:var(--muted);margin:6px 0 18px;max-width:62ch}
+.log{display:flex;flex-direction:column;gap:14px;min-height:230px;max-height:480px;overflow:auto;padding:2px 2px 8px}
+.empty{border:1.5px dashed var(--line);border-radius:14px;padding:20px;color:var(--muted)}
+.empty b{display:block;color:var(--ink);font-family:var(--head);font-size:1.1rem;margin-bottom:6px}
+.starters{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{min-height:44px;padding:0 14px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;font:inherit;font-size:.92rem;cursor:pointer}
+.chip:hover{border-color:var(--ink)}
+.msg{max-width:86%;padding:14px 18px;border-radius:14px;white-space:pre-wrap;word-wrap:break-word;font-size:1.08rem}
+.msg.u{align-self:flex-end;background:var(--ink);color:var(--paper)}
+.msg.a{align-self:flex-start;background:var(--sunken);border:1px solid var(--line)}
+.msg .tb{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;white-space:normal}
+.msg .tb .btn{min-height:40px;font-size:.85rem;padding:0 12px;border-width:1px}
+.think{display:inline-flex;align-items:center;gap:10px;color:var(--muted)}
+.spin{width:18px;height:18px;border:3px solid var(--line);border-top-color:var(--ink);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.comp{margin-top:14px;border:1.5px solid var(--line);border-radius:14px;background:var(--surface);padding:12px}
+.comp:focus-within{border-color:var(--ink)}
+textarea{width:100%;min-height:84px;resize:vertical;border:0;background:transparent;color:var(--ink);font:inherit;font-size:1.08rem;line-height:1.5;padding:6px;outline:none}
+textarea.mono{font-family:var(--mono);font-size:.85rem;min-height:190px}
+.crow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.crow .sp{flex:1}
+.hint{font-size:.88rem;color:var(--muted)}
+.mic.on{background:var(--red);border-color:var(--red);color:#fff}
+.res{margin-top:20px;display:flex;flex-direction:column;gap:14px}
+.rc{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:16px 18px}
+.rc h3{font-size:.95rem;color:var(--goldtx);margin-bottom:6px;font-family:var(--body);letter-spacing:0}
+.rc p,.rc li{font-size:1.06rem;white-space:pre-wrap}
+.rc ol,.rc ul{padding-left:1.3rem;display:flex;flex-direction:column;gap:6px}
+.rc dl dt{font-weight:700;margin-top:8px}
+.rc dl dd{color:var(--muted)}
+.rc.warn{border-color:var(--goldtx);background:var(--goldbg)}
+.rc.big{border-color:var(--ink);border-width:1.5px}
+.rtb{display:flex;gap:8px;flex-wrap:wrap}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;border:2px dashed var(--line);border-radius:14px;min-height:170px;padding:20px;color:var(--muted)}
+.drop img{max-height:200px;max-width:100%;border-radius:10px;border:1px solid var(--line)}
+.cbig{background:#050914;color:#fff;border-radius:14px;padding:24px;min-height:240px;font-family:var(--head);font-size:clamp(1.5rem,3vw,2.3rem);line-height:1.38;letter-spacing:-.01em;max-height:420px;overflow:auto;white-space:pre-wrap}
+.cbig .im{color:#9DAAC6}
+.cbig:empty::before{content:attr(data-ph);color:#9DAAC6;font-size:1.1rem;font-family:var(--body)}
+.ringw{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.ring{position:relative;width:104px;height:104px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:10;stroke-linecap:round}
+.ring .a{stroke:var(--line)}.ring .b{stroke:var(--ink);transition:stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--head);font-size:1.9rem;font-weight:800;letter-spacing:-.03em}
+.iss{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:.98rem}
+.tg{flex:none;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:5px;border:1.5px solid currentColor;height:fit-content;margin-top:3px}
+.tg.c{color:var(--red)}.tg.s{color:var(--goldtx)}.tg.m{color:var(--muted)}
+.iss code{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+pre.code{margin:0;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--sunken);font-family:var(--mono);font-size:.8rem;line-height:1.7;overflow:auto;max-height:300px;white-space:pre}
+.note{margin-top:14px;font-size:.88rem;color:var(--muted)}
+
+/* sections */
+section.s{padding:112px 0 0}
+.sh{max-width:720px;margin-bottom:44px}
+.sh h2{font-size:clamp(1.9rem,3.8vw,3.1rem);font-weight:800;letter-spacing:-.035em}
+.sh p{margin-top:14px;color:var(--muted);font-size:1.12rem}
+.why{border-top:1px solid var(--line)}
+.why li{list-style:none;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}
+@media(max-width:700px){.why li{grid-template-columns:1fr}}
+.why q{font-family:var(--head);font-size:clamp(1.15rem,2.2vw,1.55rem);font-weight:600;letter-spacing:-.02em;quotes:none;display:block}
+.why span{display:block;color:var(--muted);margin-top:4px}
+.cmp{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);font-size:1rem}
+.cmpw{overflow-x:auto;border-radius:14px}
+.cmp th,.cmp td{padding:16px 20px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.cmp thead th{background:var(--sunken);font-family:var(--head);font-size:1rem}
+.cmp td:first-child{font-weight:700;width:22%}
+.cmp td:nth-child(2){color:var(--muted)}
+.cmp td:nth-child(3){background:var(--goldbg)}
+.cmp tr:last-child td{border-bottom:0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:st;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+@media(max-width:800px){.steps{grid-template-columns:1fr}}
+.steps li{list-style:none;padding:28px 28px 28px 0;counter-increment:st}
+.steps li + li{padding-left:28px;border-left:1px solid var(--line)}
+@media(max-width:800px){.steps li,.steps li + li{padding:22px 0;border-left:0}.steps li + li{border-top:1px solid var(--line)}}
+.steps li::before{content:counter(st);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--paper);font-weight:800;margin-bottom:14px;font-family:var(--head)}
+.steps h3{font-size:1.25rem;margin-bottom:6px}.steps p{color:var(--muted)}
+.dkband{background:var(--n0);color:#F2F5FA;margin-top:112px;padding:72px 0}
+.facts{display:grid;grid-template-columns:repeat(3,1fr)}
+@media(max-width:800px){.facts{grid-template-columns:1fr}}
+.facts div{padding:0 28px 0 0}
+.facts div + div{padding-left:28px;border-left:1px solid var(--n3)}
+@media(max-width:800px){.facts div,.facts div + div{padding:20px 0;border-left:0}.facts div + div{border-top:1px solid var(--n3)}}
+.facts b{display:block;font-family:var(--head);font-size:clamp(2.2rem,4vw,3.3rem);font-weight:800;letter-spacing:-.04em;line-height:1}
+.facts span{display:block;margin-top:10px;color:var(--nm);max-width:32ch}
+.facts cite{display:block;margin-top:8px;font-style:normal;font-family:var(--mono);font-size:.78rem;color:var(--nm)}
+footer{background:var(--n0);color:var(--nm);border-top:1px solid var(--n3);padding:40px 0 60px;font-size:.93rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px}
+footer strong{color:#fff;font-family:var(--head)}
+kbd{font-family:var(--mono);font-size:.76rem;border:1px solid var(--n3);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:var(--n2);color:#fff}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:#fff;color:#0B1226;padding:12px 18px;border-radius:10px;z-index:90;opacity:0;pointer-events:none;transition:opacity .2s;font-weight:700;max-width:90vw;text-align:center}
+#toast.on{opacity:1}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="f-pro"><feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0"/></filter>
+    <filter id="f-deu"><feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0"/></filter>
+    <filter id="f-tri"><feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.433 0.567 0 0  0 0.475 0.525 0 0  0 0 0 1 0"/></filter>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12Z"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-ear" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 1 11 3.3c-1.2 1.4-2 2.2-2 4.2a3 3 0 0 1-5.6 1.5M9 9a3 3 0 0 1 6 0"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.2 8 8 9 4.8-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></symbol>
+    <symbol id="i-type" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></symbol>
+    <symbol id="i-cam" viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h2l2-2h6l2 2h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-vol" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v12m0 0-4-4m4 4 4-4M5 20h14"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4 20-7Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+    <symbol id="i-wand" viewBox="0 0 24 24"><path d="m4 20 11-11M14 4v3M20 10h-3M18 4l-1.5 1.5M5 5l1.5 1.5"/></symbol>
+    <symbol id="i-mark" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="3.5" stroke-dasharray="64 18" stroke-linecap="round" transform="rotate(-50 16 16)"/><circle cx="16" cy="16" r="4.5" fill="#FFB020"/></symbol>
+  </defs>
+</svg>
+
+<div id="page">
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="top dk">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Samavesh AI, home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Samavesh AI</span></a>
+    <nav aria-label="Primary">
+      <a href="#try" data-i="nTry">Try it</a>
+      <a href="#why" data-i="nWhy">Why Samavesh</a>
+      <a href="#how" data-i="nHow">How it works</a>
+    </nav>
+    <span class="sp"></span>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="hi" lang="hi" aria-pressed="false">हिंदी</button>
+      <button type="button" data-lang="mr" lang="mr" aria-pressed="false">मराठी</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<div class="hero dk" id="top">
+  <div class="wrap">
+    <div>
+      <h1 data-i="h1">AI that works the way you do.</h1>
+    </div>
+    <div>
+      <p class="lead" data-i="lead">Talk, type or show a photo. Get answers in simple words, in your language, read aloud.</p>
+      <div class="modes" aria-label="Ways to use Samavesh">
+        <span class="mode"><svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>Speak</span>
+        <span class="mode"><svg class="i" aria-hidden="true"><use href="#i-type"/></svg>Type</span>
+        <span class="mode"><svg class="i" aria-hidden="true"><use href="#i-cam"/></svg>Show a photo</span>
+        <span class="mode"><svg class="i" aria-hidden="true"><use href="#i-vol"/></svg>Listen</span>
+      </div>
+      <div class="actions"><a class="btn gold" href="#try" data-i="cta">Try it now</a><a class="btn dkb" href="#why" data-i="cta2">Why people use it</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap bw" id="try">
+  <div class="stat" id="aiStat" role="status"><span class="dot" aria-hidden="true"></span><span id="aiTxt">Checking AI connection…</span><small id="aiSub"></small></div>
+  <div class="bench">
+    <details class="set" id="setBox" open>
+      <summary data-i="setT">Make it work for you</summary>
+      <div class="setb">
+        <div class="c"><label class="l" for="selLang" data-i="lblLang">My language</label><select class="sel" id="selLang"></select></div>
+        <div class="c"><div class="l" id="lLv" data-i="lblLv">Reading level</div><div class="seg" role="group" aria-labelledby="lLv" id="lvSeg"><button type="button" data-v="0" aria-pressed="true">Normal</button><button type="button" data-v="1" aria-pressed="false">Simple</button><button type="button" data-v="2" aria-pressed="false">Very simple</button></div></div>
+        <div class="c"><label class="l" for="auto">Read answers aloud automatically <span class="sw"><input id="auto" type="checkbox" role="switch"><i></i></span></label></div>
+        <div class="c"><div class="l" id="lSp">Voice speed</div><div class="seg" role="group" aria-labelledby="lSp" id="spSeg"><button type="button" data-v="0" aria-pressed="false">Slow</button><button type="button" data-v="1" aria-pressed="true">Normal</button><button type="button" data-v="2" aria-pressed="false">Fast</button></div></div>
+        <div class="c"><label class="l" for="fsz">Text size <output id="fszo" for="fsz">100%</output></label><input id="fsz" type="range" min="90" max="170" step="5" value="100"></div>
+        <div class="c"><div class="l" id="lTh">Theme</div><div class="seg" role="group" aria-labelledby="lTh" id="thSeg"><button type="button" data-v="auto" aria-pressed="true">Auto</button><button type="button" data-v="light" aria-pressed="false">Light</button><button type="button" data-v="dark" aria-pressed="false">Dark</button><button type="button" data-v="yellow" aria-pressed="false">Yellow on black</button></div></div>
+        <div class="c"><label class="l" for="selCb">Colour vision</label><select class="sel" id="selCb"><option value="none">Normal</option><option value="pro">Protanopia</option><option value="deu">Deuteranopia</option><option value="tri">Tritanopia</option><option value="grey">Greyscale</option></select></div>
+        <div class="c"><label class="l" for="dys">Dyslexia-friendly text <span class="sw"><input id="dys" type="checkbox" role="switch"><i></i></span></label></div>
+        <div class="c"><label class="l" for="mot">Reduce motion <span class="sw"><input id="mot" type="checkbox" role="switch"><i></i></span></label></div>
+        <div class="c"><button class="btn sm" id="rst" type="button">Reset settings</button></div>
+        <p class="note">Settings are saved on this device only.</p>
+      </div>
+    </details>
+
+    <div class="mainp">
+      <div class="tabs" role="tablist" aria-label="Tools" id="tabs">
+        <button class="tab" role="tab" id="tab-ask" aria-controls="p-ask" aria-selected="true"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg><span data-i="tAsk">Ask</span></button>
+        <button class="tab" role="tab" id="tab-doc" aria-controls="p-doc" aria-selected="false" tabindex="-1"><svg class="i" aria-hidden="true"><use href="#i-doc"/></svg><span data-i="tDoc">Documents</span></button>
+        <button class="tab" role="tab" id="tab-photo" aria-controls="p-photo" aria-selected="false" tabindex="-1"><svg class="i" aria-hidden="true"><use href="#i-eye"/></svg><span data-i="tPhoto">Photos</span></button>
+        <button class="tab" role="tab" id="tab-cap" aria-controls="p-cap" aria-selected="false" tabindex="-1"><svg class="i" aria-hidden="true"><use href="#i-ear"/></svg><span data-i="tCap">Captions</span></button>
+        <button class="tab" role="tab" id="tab-web" aria-controls="p-web" aria-selected="false" tabindex="-1"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg><span data-i="tWeb">Website check</span></button>
+      </div>
+
+      <!-- ASK -->
+      <div class="panel" id="p-ask" role="tabpanel" aria-labelledby="tab-ask">
+        <h2 data-i="askH">Ask anything</h2>
+        <p class="sub" data-i="askS">Speak or type in your language. Answers come back short and clear.</p>
+        <div class="log" id="log" role="log" aria-live="polite" aria-label="Conversation">
+          <div class="empty" id="askEmpty"><b>Not sure what to ask?</b>Start with one of these.<div class="starters" id="starters"></div></div>
+        </div>
+        <div class="comp">
+          <label class="sr" for="askIn">Your question</label>
+          <textarea id="askIn" data-ip="askPh" placeholder="Type your question, or press Speak"></textarea>
+          <div class="crow">
+            <button class="btn sm mic" id="askMic" type="button" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-mic"/></svg><span data-i="speak">Speak</span></button>
+            <span class="hint" id="askHint"></span><span class="sp"></span>
+            <button class="btn sm" id="askStop" type="button" hidden><svg class="i" aria-hidden="true"><use href="#i-stop"/></svg>Stop</button>
+            <button class="btn gold sm" id="askGo" type="button"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg><span data-i="send">Ask</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DOC -->
+      <div class="panel" id="p-doc" role="tabpanel" aria-labelledby="tab-doc" hidden>
+        <h2 data-i="docH">Understand a letter or form</h2>
+        <p class="sub" data-i="docS">Paste the text or add a photo. You get what it says, what to do, and the hard words explained.</p>
+        <div class="comp">
+          <label class="sr" for="docIn">Paste document text</label>
+          <textarea id="docIn" placeholder="Paste the text of a letter, bill, notice or medical report here"></textarea>
+          <div class="crow">
+            <button class="btn sm" id="docEx" type="button">Use an example letter</button>
+            <label class="btn sm" for="docFile"><svg class="i" aria-hidden="true"><use href="#i-cam"/></svg>Add a photo</label>
+            <input class="sr" type="file" id="docFile" accept="image/*">
+            <span class="hint" id="docFn"></span><span class="sp"></span>
+            <button class="btn gold sm" id="docGo" type="button"><svg class="i" aria-hidden="true"><use href="#i-wand"/></svg>Explain it</button>
+          </div>
+        </div>
+        <div class="res" id="docOut" aria-live="polite"></div>
+      </div>
+
+      <!-- PHOTO -->
+      <div class="panel" id="p-photo" role="tabpanel" aria-labelledby="tab-photo" hidden>
+        <h2 data-i="phH">Describe a photo</h2>
+        <p class="sub" data-i="phS">Get a clear description, any text in the picture, and alt text you can use on a website.</p>
+        <div class="drop" id="phDrop"><span id="phMsg">No photo yet</span></div>
+        <div class="crow" style="margin-top:12px">
+          <label class="btn sm" for="phFile"><svg class="i" aria-hidden="true"><use href="#i-cam"/></svg>Choose or take a photo</label>
+          <input class="sr" type="file" id="phFile" accept="image/*" capture="environment">
+          <button class="btn sm" id="phEx" type="button">Use a sample photo</button><span class="sp"></span>
+          <button class="btn gold sm" id="phGo" type="button"><svg class="i" aria-hidden="true"><use href="#i-eye"/></svg>Describe it</button>
+        </div>
+        <div class="res" id="phOut" aria-live="polite"></div>
+      </div>
+
+      <!-- CAPTIONS -->
+      <div class="panel" id="p-cap" role="tabpanel" aria-labelledby="tab-cap" hidden>
+        <h2 data-i="capH">Live captions</h2>
+        <p class="sub" data-i="capS">Turn speech into large, readable text as people talk. Uses your microphone and the language you chose.</p>
+        <div class="cbig" id="capBox" data-ph="Captions will appear here." aria-live="off" role="region" aria-label="Captions" tabindex="0"></div>
+        <div class="crow" style="margin-top:12px">
+          <button class="btn gold sm" id="capGo" type="button"><svg class="i" aria-hidden="true"><use href="#i-mic"/></svg><span>Start captions</span></button>
+          <button class="btn sm" id="capSample" type="button">Play sample captions</button>
+          <button class="btn sm" id="capClear" type="button">Clear</button>
+          <span class="sp"></span>
+          <button class="btn sm" id="capCopy" type="button"><svg class="i" aria-hidden="true"><use href="#i-copy"/></svg>Copy</button>
+          <button class="btn sm" id="capSave" type="button"><svg class="i" aria-hidden="true"><use href="#i-down"/></svg>Download .txt</button>
+        </div>
+        <p class="note" id="capNote"></p>
+      </div>
+
+      <!-- WEB -->
+      <div class="panel" id="p-web" role="tabpanel" aria-labelledby="tab-web" hidden>
+        <h2 data-i="webH">Check a website for barriers</h2>
+        <p class="sub" data-i="webS">Paste HTML. Samavesh finds accessibility problems, scores the page, and writes a fixed version.</p>
+        <div class="comp">
+          <label class="sr" for="webIn">HTML to check</label>
+          <textarea class="mono" id="webIn" spellcheck="false" placeholder="Paste HTML here"></textarea>
+          <div class="crow">
+            <button class="btn sm" id="webEx" type="button">Use example page</button><span class="sp"></span>
+            <button class="btn gold sm" id="webGo" type="button"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Check page</button>
+          </div>
+        </div>
+        <div class="res" id="webOut" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+  <p class="note">AI answers run on your own Claude account. The first time, you will be asked to allow it. Do not paste private data you would not share.</p>
+</div>
+
+<section class="s" id="why" aria-labelledby="whyH">
+  <div class="wrap">
+    <div class="sh"><h2 id="whyH" data-i="whyH">Why people use Samavesh</h2><p data-i="whyP">Most AI assumes you can type fluent English, read long text and use a mouse. Real people don't all work that way. Pick a situation to try it.</p></div>
+    <ul class="why" id="whyList"></ul>
+  </div>
+</section>
+
+<section class="s" aria-labelledby="cmpH">
+  <div class="wrap">
+    <div class="sh"><h2 id="cmpH">What is different</h2><p>Many AI chatbots make you adapt to them. Samavesh adapts to you.</p></div>
+    <div class="cmpw"><table class="cmp">
+      <caption class="sr">Comparison between many typical chatbots and Samavesh</caption>
+      <thead><tr><th scope="col">&nbsp;</th><th scope="col">Many AI chatbots</th><th scope="col">Samavesh</th></tr></thead>
+      <tbody>
+        <tr><td>How you ask</td><td>Mostly typing</td><td>Speak, type, or show a photo</td></tr>
+        <tr><td>Language</td><td>Best in English</td><td>English and seven Indian languages, with voice in each where your device supports it</td></tr>
+        <tr><td>How long and hard the answer is</td><td>Same for everyone</td><td>You choose: Normal, Simple or Very simple</td></tr>
+        <tr><td>How you get the answer</td><td>A block of text</td><td>Short text, read aloud, big type, your colours and font</td></tr>
+        <tr><td>Everyday paperwork</td><td>You must know what to ask</td><td>Paste a letter and get what it says and what to do</td></tr>
+        <tr><td>Builders</td><td>Not their focus</td><td>Built-in WCAG check with a fixed version of your page</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section class="s" id="how" aria-labelledby="howH">
+  <div class="wrap">
+    <div class="sh"><h2 id="howH" data-i="howH">How it works</h2></div>
+    <ol class="steps">
+      <li><h3>Set it up for you</h3><p>Choose your language, reading level, text size and colours. This takes under a minute and is remembered on your device.</p></li>
+      <li><h3>Speak, type or show</h3><p>Ask a question, paste a letter, add a photo, or turn on captions for a conversation.</p></li>
+      <li><h3>Get it your way</h3><p>Read a short answer, or have it read aloud. Ask again in simpler words as many times as you like.</p></li>
+    </ol>
+  </div>
+</section>
+
+<div class="dkband dk">
+  <div class="wrap">
+    <div class="facts">
+      <div><b>1.3 billion</b><span>people live with a significant disability, about 1 in 6 worldwide.</span><cite>WHO</cite></div>
+      <div><b>About 95%</b><span>of home pages have detectable accessibility failures.</span><cite>WebAIM Million</cite></div>
+      <div><b>2.68 crore</b><span>disabled people in India. The true figure is widely thought to be higher.</span><cite>Census of India, 2011</cite></div>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer class="dk">
+  <div class="wrap">
+    <div><strong>Samavesh AI</strong><p>समावेश means inclusion. Built toward WCAG 2.2 AA.</p></div>
+    <div><p>Shortcuts: <kbd>Alt</kbd> + <kbd>1</kbd> to <kbd>5</kbd> switch tool · <kbd>Ctrl</kbd> + <kbd>Enter</kbd> send</p><p>AI can make mistakes. Check important information.</p></div>
+  </div>
+</footer>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+var root=document.documentElement,body=document.body,page=document.getElementById('page');
+function $(s,c){return (c||document).querySelector(s)}
+function $$(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))}
+function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('on')},2800)}
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e}
+function ico(id){var s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('class','i');s.setAttribute('aria-hidden','true');var u=document.createElementNS('http://www.w3.org/2000/svg','use');u.setAttribute('href','#'+id);s.appendChild(u);return s}
+function btn(label,icon,cls){var b=el('button','btn sm '+(cls||''));b.type='button';if(icon)b.appendChild(ico(icon));b.appendChild(el('span','',label));return b}
+
+/* ---------- languages + i18n ---------- */
+var LANGS={en:{n:'English',native:'English',sp:'en-IN'},hi:{n:'Hindi',native:'हिंदी',sp:'hi-IN'},mr:{n:'Marathi',native:'मराठी',sp:'mr-IN'},ta:{n:'Tamil',native:'தமிழ்',sp:'ta-IN'},te:{n:'Telugu',native:'తెలుగు',sp:'te-IN'},bn:{n:'Bengali',native:'বাংলা',sp:'bn-IN'},gu:{n:'Gujarati',native:'ગુજરાતી',sp:'gu-IN'},kn:{n:'Kannada',native:'ಕನ್ನಡ',sp:'kn-IN'}};
+var T={
+en:{nTry:'Try it',nWhy:'Why Samavesh',nHow:'How it works',h1:'AI that works the way you do.',lead:'Talk, type or show a photo. Get answers in simple words, in your language, read aloud.',cta:'Try it now',cta2:'Why people use it',setT:'Make it work for you',lblLang:'My language',lblLv:'Reading level',tAsk:'Ask',tDoc:'Documents',tPhoto:'Photos',tCap:'Captions',tWeb:'Website check',askH:'Ask anything',askS:'Speak or type in your language. Answers come back short and clear.',askPh:'Type your question, or press Speak',speak:'Speak',send:'Ask',docH:'Understand a letter or form',docS:'Paste the text or add a photo. You get what it says, what to do, and the hard words explained.',phH:'Describe a photo',phS:'Get a clear description, any text in the picture, and alt text you can use on a website.',capH:'Live captions',capS:'Turn speech into large, readable text as people talk. Uses your microphone and the language you chose.',webH:'Check a website for barriers',webS:'Paste HTML. Samavesh finds accessibility problems, scores the page, and writes a fixed version.',whyH:'Why people use Samavesh',whyP:"Most AI assumes you can type fluent English, read long text and use a mouse. Real people don't all work that way. Pick a situation to try it.",howH:'How it works'},
+hi:{nTry:'आज़माएँ',nWhy:'समावेश क्यों',nHow:'कैसे काम करता है',h1:'ऐसा AI जो आपके तरीके से काम करे।',lead:'बोलिए, लिखिए या तस्वीर दिखाइए। जवाब सरल शब्दों में, आपकी भाषा में, सुनने के साथ पाइए।',cta:'अभी आज़माएँ',cta2:'लोग इसे क्यों इस्तेमाल करते हैं',setT:'इसे अपने हिसाब से बनाएँ',lblLang:'मेरी भाषा',lblLv:'पढ़ने का स्तर',tAsk:'पूछें',tDoc:'दस्तावेज़',tPhoto:'तस्वीरें',tCap:'कैप्शन',tWeb:'वेबसाइट जाँच',askH:'कुछ भी पूछें',askS:'अपनी भाषा में बोलें या लिखें। जवाब छोटे और साफ़ मिलेंगे।',askPh:'अपना सवाल लिखें, या बोलें दबाएँ',speak:'बोलें',send:'पूछें',docH:'चिट्ठी या फ़ॉर्म समझें',docS:'टेक्स्ट पेस्ट करें या फ़ोटो जोड़ें। आपको मिलेगा कि इसमें क्या है, क्या करना है, और कठिन शब्दों के मतलब।',phH:'तस्वीर का वर्णन',phS:'तस्वीर का साफ़ वर्णन, उसमें लिखा टेक्स्ट, और वेबसाइट के लिए alt text पाइए।',capH:'लाइव कैप्शन',capS:'बोलचाल को बड़े, पढ़ने लायक टेक्स्ट में बदलें। आपका माइक्रोफ़ोन और चुनी हुई भाषा इस्तेमाल होती है।',webH:'वेबसाइट की रुकावटें जाँचें',webS:'HTML पेस्ट करें। समावेश समस्याएँ ढूँढता है, स्कोर देता है और सुधरा हुआ संस्करण लिखता है।',whyH:'लोग समावेश क्यों इस्तेमाल करते हैं',whyP:'ज़्यादातर AI मानता है कि आप धाराप्रवाह अंग्रेज़ी लिख सकते हैं, लंबा पाठ पढ़ सकते हैं और माउस चला सकते हैं। असल में सब ऐसे नहीं होते। कोई स्थिति चुनकर आज़माएँ।',howH:'कैसे काम करता है'},
+mr:{nTry:'वापरून पहा',nWhy:'समावेश का',nHow:'कसे चालते',h1:'असा AI जो तुमच्या पद्धतीने काम करतो.',lead:'बोला, लिहा किंवा फोटो दाखवा. उत्तर सोप्या शब्दांत, तुमच्या भाषेत, ऐकण्यासह मिळवा.',cta:'आत्ताच वापरून पहा',cta2:'लोक हे का वापरतात',setT:'हे तुमच्यासाठी जुळवा',lblLang:'माझी भाषा',lblLv:'वाचन पातळी',tAsk:'विचारा',tDoc:'दस्तावेज',tPhoto:'फोटो',tCap:'कॅप्शन',tWeb:'वेबसाइट तपासणी',askH:'काहीही विचारा',askS:'तुमच्या भाषेत बोला किंवा लिहा. उत्तर छोटे आणि स्पष्ट येते.',askPh:'तुमचा प्रश्न लिहा, किंवा बोला दाबा',speak:'बोला',send:'विचारा',docH:'पत्र किंवा फॉर्म समजून घ्या',docS:'मजकूर पेस्ट करा किंवा फोटो जोडा. त्यात काय आहे, काय करायचे आणि अवघड शब्दांचे अर्थ मिळतात.',phH:'फोटोचे वर्णन',phS:'फोटोचे स्पष्ट वर्णन, त्यातील मजकूर आणि वेबसाइटसाठी alt text मिळवा.',capH:'लाइव्ह कॅप्शन',capS:'बोलणे मोठ्या, वाचण्यायोग्य मजकुरात बदला. तुमचा मायक्रोफोन आणि निवडलेली भाषा वापरली जाते.',webH:'वेबसाइटमधील अडथळे तपासा',webS:'HTML पेस्ट करा. समावेश समस्या शोधतो, स्कोअर देतो आणि दुरुस्त आवृत्ती लिहितो.',whyH:'लोक समावेश का वापरतात',whyP:'बहुतेक AI असे गृहीत धरतात की तुम्ही उत्तम इंग्रजी लिहू शकता, लांब मजकूर वाचू शकता आणि माउस वापरू शकता. प्रत्यक्षात सगळे तसे नसतात. एखादी परिस्थिती निवडून वापरून पहा.',howH:'कसे चालते'}
+};
+var S={lang:'en',lv:0,auto:false,sp:1,fs:100,th:'auto',cb:'none',dys:false,mot:false};
+try{var sv=JSON.parse(get('sam4')||'null');if(sv)for(var k in S)if(k in sv)S[k]=sv[k]}catch(e){}
+
+function tr(){var d=T[S.lang]||T.en;$$('[data-i]').forEach(function(e){var v=d[e.dataset.i];if(v===undefined)v=T.en[e.dataset.i];if(v!==undefined)e.textContent=v});$$('[data-ip]').forEach(function(e){var v=d[e.dataset.ip]||T.en[e.dataset.ip];e.setAttribute('placeholder',v)})}
+function apply(){
+  root.lang=(S.lang==='en'||S.lang==='hi'||S.lang==='mr')?S.lang:'en';
+  root.style.setProperty('--fs',S.fs/100);$('#fszo').textContent=S.fs+'%';$('#fsz').value=S.fs;
+  if(S.th==='auto')root.removeAttribute('data-theme');else root.setAttribute('data-theme',S.th);
+  page.style.filter=S.cb==='none'?'':(S.cb==='grey'?'grayscale(1)':'url(#f-'+S.cb+')');
+  $('#selCb').value=S.cb;$('#selLang').value=S.lang;
+  $$('#thSeg button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===S.th)});
+  $$('#lvSeg button').forEach(function(b){b.setAttribute('aria-pressed',+b.dataset.v===S.lv)});
+  $$('#spSeg button').forEach(function(b){b.setAttribute('aria-pressed',+b.dataset.v===S.sp)});
+  $$('[data-lang]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===S.lang)});
+  body.classList.toggle('dys',S.dys);body.classList.toggle('still',S.mot);
+  $('#dys').checked=S.dys;$('#mot').checked=S.mot;$('#auto').checked=S.auto;
+  tr();set('sam4',JSON.stringify(S));
+}
+var sl=$('#selLang');Object.keys(LANGS).forEach(function(k){var o=el('option','',LANGS[k].native+(k==='en'?'':' ('+LANGS[k].n+')'));o.value=k;sl.appendChild(o)});
+sl.addEventListener('change',function(){S.lang=sl.value;apply()});
+$$('[data-lang]').forEach(function(b){b.addEventListener('click',function(){S.lang=b.dataset.lang;apply()})});
+$$('#lvSeg button').forEach(function(b){b.addEventListener('click',function(){S.lv=+b.dataset.v;apply()})});
+$$('#spSeg button').forEach(function(b){b.addEventListener('click',function(){S.sp=+b.dataset.v;apply()})});
+$$('#thSeg button').forEach(function(b){b.addEventListener('click',function(){S.th=b.dataset.v;apply()})});
+$('#selCb').addEventListener('change',function(e){S.cb=e.target.value;apply()});
+$('#fsz').addEventListener('input',function(e){S.fs=+e.target.value;apply()});
+$('#dys').addEventListener('change',function(e){S.dys=e.target.checked;apply()});
+$('#mot').addEventListener('change',function(e){S.mot=e.target.checked;apply()});
+$('#auto').addEventListener('change',function(e){S.auto=e.target.checked;apply()});
+$('#rst').addEventListener('click',function(){S={lang:'en',lv:0,auto:false,sp:1,fs:100,th:'auto',cb:'none',dys:false,mot:false};apply();toast('Settings reset')});
+if(window.matchMedia&&matchMedia('(max-width:940px)').matches)$('#setBox').removeAttribute('open');
+
+/* ---------- AI wrapper ---------- */
+var SAMPLE=null,IMG=false,aiState='check';
+function setStat(kind){aiState=kind;var s=$('#aiStat');s.className='stat '+(kind==='on'?'on':(kind==='demo'?'demo':''));
+  $('#aiTxt').textContent=kind==='on'?'AI connected':(kind==='demo'?'Demo mode: showing sample answers':'Checking AI connection…');
+  $('#aiSub').textContent=kind==='on'?'Answers are generated live.':(kind==='demo'?'AI is not available in this view. All tools still work with built-in samples.':'')}
+(function init(){
+  if(!(window.claude&&window.claude.use)){setStat('demo');return}
+  window.claude.use('sample').then(function(fn){
+    if(!fn){setStat('demo');return}
+    SAMPLE=fn;setStat('on');
+    if(fn.limits)fn.limits().then(function(l){IMG=!!(l&&l.images)}).catch(function(){IMG=false});
+  }).catch(function(){setStat('demo')});
+})();
+function ai(input,opts){
+  if(!SAMPLE)return Promise.reject({code:'none'});
+  return SAMPLE(input,opts||{});
+}
+function aiJson(input,opts){
+  if(!SAMPLE)return Promise.reject({code:'none'});
+  return SAMPLE.json(input,opts||{});
+}
+function dead(e){return e&&(e.code==='none'||e.code==='not_granted'||e.code==='sampling_disabled'||e.code==='not_declared'||e.code==='capability_disabled'||e.code==='capability_removed')}
+function errMsg(e){var c=e&&e.code;
+  if(c==='rate_limited')return 'Too many requests, or your usage limit was reached. Wait a moment and try again.';
+  if(c==='session_expired')return 'Please sign in again to Claude, then retry.';
+  if(c==='image_rejected')return 'That photo could not be used. Try a JPEG or PNG under 20 MB.';
+  if(c==='refused')return 'The AI could not help with that request. Try rewording it.';
+  if(c==='invalid_json'||c==='empty_completion')return 'The AI reply was not usable. Press the button to try again.';
+  return 'Something went wrong. Check your connection and try again.'}
+
+function sys(){
+  var LV=['Normal: clear and concise.','Simple: about a grade 6 reading level. Short sentences. Everyday words.','Very simple: about a grade 3 reading level. Very short sentences. One idea per sentence. No hard words.'];
+  return 'You are Samavesh, an AI assistant built so that everyone can use AI, including people with disabilities, people with low literacy, and people who do not speak English.\nRules:\n- Reply in '+LANGS[S.lang].n+'.\n- Reading level: '+LV[S.lv]+'\n- Explain any hard word the first time you use it.\n- Plain text only. No markdown symbols, no emoji, no tables. For steps, put each on a new line starting with 1., 2., 3.\n- Be warm, direct and accurate. If you are not sure, say so.\n- For medical, legal or money questions, give clear general information and add one short line to check with a qualified person.\n- Keep answers under 150 words unless asked for more.'}
+
+/* ---------- speech out ---------- */
+var cur=null;
+function stopSpeak(){if('speechSynthesis' in window)speechSynthesis.cancel();if(cur){lab(cur,false);cur=null}}
+function lab(b,on){var s=b.querySelector('span');if(s)s.textContent=on?'Stop':'Read aloud';var u=b.querySelector('use');if(u)u.setAttribute('href',on?'#i-stop':'#i-vol')}
+function speak(text,b){
+  if(!('speechSynthesis' in window)){toast('Reading aloud is not supported in this browser');return}
+  if(cur===b){stopSpeak();return}
+  stopSpeak();
+  var u=new SpeechSynthesisUtterance(text);u.lang=LANGS[S.lang].sp;u.rate=[.8,1,1.25][S.sp];
+  var vs=speechSynthesis.getVoices();
+  if(vs.length&&!vs.some(function(v){return v.lang.toLowerCase().indexOf(u.lang.slice(0,2).toLowerCase())===0}))toast('No '+LANGS[S.lang].n+' voice found on this device. Using the default voice.');
+  u.onend=u.onerror=function(){if(cur===b){lab(b,false);cur=null}};
+  if(b){cur=b;lab(b,true)}
+  speechSynthesis.speak(u);
+}
+
+/* ---------- speech in ---------- */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function recog(opts){
+  if(!SR)return null;
+  var r=new SR();r.lang=LANGS[S.lang].sp;r.interimResults=true;r.continuous=!!opts.continuous;
+  r.onresult=function(ev){var fin='',im='';for(var i=ev.resultIndex;i<ev.results.length;i++){var t=ev.results[i][0].transcript;if(ev.results[i].isFinal)fin+=t;else im+=t}opts.onText(fin,im)};
+  r.onerror=function(ev){opts.onError(ev.error)};
+  r.onend=function(){opts.onEnd()};
+  return r;
+}
+function micErr(c){return c==='not-allowed'||c==='service-not-allowed'?'The microphone is blocked in this view. Allow microphone access in your browser, or open this page in its own tab.':(c==='no-speech'?'No speech heard. Try again.':'Speech input failed ('+c+').')}
+
+/* ---------- tabs ---------- */
+var TABS=['ask','doc','photo','cap','web'];
+function showTab(n,focus){TABS.forEach(function(t){var on=t===n;var b=$('#tab-'+t);b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;$('#p-'+t).hidden=!on});if(focus)$('#tab-'+n).focus();stopSpeak()}
+TABS.forEach(function(t,i){var b=$('#tab-'+t);b.addEventListener('click',function(){showTab(t)});b.addEventListener('keydown',function(e){var n=null;if(e.key==='ArrowRight')n=(i+1)%5;if(e.key==='ArrowLeft')n=(i+4)%5;if(n!==null){e.preventDefault();showTab(TABS[n],true)}})});
+document.addEventListener('keydown',function(e){if(e.altKey&&e.key>='1'&&e.key<='5'){e.preventDefault();showTab(TABS[+e.key-1],true)}});
+
+/* ---------- ASK ---------- */
+var turns=[],askCtl=null,askBusy=false,askRec=null;
+var STARTERS=['What does "overdue" mean on my bill?','How do I apply for a ration card?','Explain diabetes in simple words','How can I check if a message is a scam?'];
+var st=$('#starters');STARTERS.forEach(function(q){var c=el('button','chip',q);c.type='button';c.addEventListener('click',function(){$('#askIn').value=q;askSend()});st.appendChild(c)});
+var DEMO_ASK='This is a sample answer, because live AI is not available in this view.\n\nIn the full app, you would get a clear answer here in your language, at the reading level you chose, and you could listen to it.\n\n1. Pick your language on the left.\n2. Choose Simple or Very simple.\n3. Press Read aloud under any answer.';
+function addMsg(cls,text){var m=el('div','msg '+cls,text);$('#log').appendChild(m);$('#log').scrollTop=1e9;return m}
+function toolbar(m,text){
+  var tb=el('div','tb');
+  var rd=btn('Read aloud','i-vol');rd.addEventListener('click',function(){speak(text,rd)});
+  var sm=btn('Make it simpler','i-wand');sm.addEventListener('click',function(){$('#askIn').value='Explain that again in simpler words.';askSend()});
+  var cp=btn('Copy','i-copy');cp.addEventListener('click',function(){copyText(text)});
+  tb.appendChild(rd);tb.appendChild(sm);tb.appendChild(cp);m.appendChild(tb);
+  if(S.auto)speak(text,rd);
+}
+function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast('Copied')}).catch(function(){toast('Copy is blocked here. Select the text and copy it.')})}else toast('Copy is not supported here. Select the text and copy it.')}
+function askSend(){
+  if(askBusy)return;
+  var q=$('#askIn').value.trim();if(!q){toast('Type or speak a question first');return}
+  $('#askEmpty').hidden=true;$('#askIn').value='';
+  addMsg('u',q);
+  var m=addMsg('a','');var th=el('span','think');th.appendChild(el('span','spin'));th.appendChild(el('span','','Thinking…'));m.appendChild(th);
+  askBusy=true;$('#askGo').disabled=true;$('#askStop').hidden=false;
+  turns.push({role:'user',content:q});
+  if(turns.length>10)turns=turns.slice(-10);
+  while(turns.length&&turns[0].role!=='user')turns.shift();
+  askCtl=new AbortController();
+  ai([{role:'user',content:sys()}].concat(turns),{signal:askCtl.signal,cache:false,modelTier:'quick',onText:function(u){m.textContent=u.text;$('#log').scrollTop=1e9}})
+  .then(function(r){m.textContent=r.text;turns.push({role:'assistant',content:r.text});toolbar(m,r.text)})
+  .catch(function(e){
+    if(e&&e.code==='cancelled'){m.textContent=e.text||'Stopped.';turns.pop();return}
+    if(dead(e)){setStat('demo');m.textContent=DEMO_ASK;turns.pop();toolbar(m,DEMO_ASK);return}
+    m.textContent=(e&&e.text?e.text+'\n\n':'')+errMsg(e);turns.pop();
+  })
+  .then(function(){askBusy=false;$('#askGo').disabled=false;$('#askStop').hidden=true;askCtl=null});
+}
+$('#askGo').addEventListener('click',askSend);
+$('#askStop').addEventListener('click',function(){if(askCtl)askCtl.abort()});
+$('#askIn').addEventListener('keydown',function(e){if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();askSend()}});
+$('#askMic').addEventListener('click',function(){
+  var b=this;
+  if(askRec){askRec.stop();return}
+  if(!SR){toast('Speech input is not supported in this browser. Try Chrome or Edge.');return}
+  var base=$('#askIn').value;
+  askRec=recog({continuous:false,onText:function(f,i){$('#askIn').value=(base?base+' ':'')+f+i;if(f)base=$('#askIn').value},onError:function(c){toast(micErr(c))},onEnd:function(){askRec=null;b.classList.remove('on');b.setAttribute('aria-pressed','false');b.querySelector('span').textContent=(T[S.lang]||T.en).speak;$('#askHint').textContent=''}});
+  try{askRec.start();b.classList.add('on');b.setAttribute('aria-pressed','true');b.querySelector('span').textContent='Listening…';$('#askHint').textContent='Speak now in '+LANGS[S.lang].n+'.'}catch(e){askRec=null}
+});
+
+/* ---------- shared: image helpers ---------- */
+function sampleImage(){
+  return new Promise(function(res){
+    var svg='<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520"><rect width="800" height="520" fill="#EDF1F7"/><rect y="360" width="800" height="160" fill="#C9D3E3"/><path d="M110 120h480l50 80H60z" fill="#FFB020"/><rect x="130" y="200" width="12" height="170" fill="#0B1226"/><rect x="560" y="200" width="12" height="170" fill="#0B1226"/><rect x="150" y="250" width="400" height="110" rx="8" fill="#fff" stroke="#0B1226" stroke-width="4"/><circle cx="215" cy="305" r="26" fill="#F59E0B"/><circle cx="285" cy="308" r="26" fill="#16A34A"/><circle cx="355" cy="305" r="26" fill="#DC2626"/><circle cx="425" cy="308" r="26" fill="#F59E0B"/><rect x="470" y="262" width="66" height="44" rx="4" fill="#F6F8FB" stroke="#0B1226" stroke-width="3"/><text x="503" y="291" font-family="Arial" font-size="18" font-weight="700" text-anchor="middle" fill="#0B1226">Rs 40</text><circle cx="690" cy="215" r="34" fill="#0B1226"/><path d="M640 400V300a50 50 0 0 1 100 0v100z" fill="#0B1226"/></svg>';
+    var im=new Image();im.onload=function(){var c=document.createElement('canvas');c.width=800;c.height=520;c.getContext('2d').drawImage(im,0,0);c.toBlob(function(b){res(b)},'image/png')};
+    im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  });
+}
+function previewInto(box,blob,alt){box.innerHTML='';var im=document.createElement('img');im.alt=alt;im.src=URL.createObjectURL(blob);box.appendChild(im)}
+function section(title,node,cls){var c=el('div','rc '+(cls||''));c.appendChild(el('h3','',title));c.appendChild(node);return c}
+function pnode(t){return el('p','',t)}
+function listNode(arr,ord){var l=el(ord?'ol':'ul');(arr||[]).forEach(function(x){l.appendChild(el('li','',String(x)))});return l}
+function thinking(box,msg,onStop){box.innerHTML='';var c=el('div','rc');var th=el('span','think');th.appendChild(el('span','spin'));th.appendChild(el('span','',msg));c.appendChild(th);if(onStop){var s=btn('Stop','i-stop');s.style.marginLeft='14px';s.addEventListener('click',onStop);c.appendChild(s)}box.appendChild(c)}
+function readBar(textFn){var tb=el('div','rtb');var rd=btn('Read aloud','i-vol');rd.addEventListener('click',function(){speak(textFn(),rd)});var cp=btn('Copy all','i-copy');cp.addEventListener('click',function(){copyText(textFn())});tb.appendChild(rd);tb.appendChild(cp);return tb}
+
+/* ---------- DOCUMENTS ---------- */
+var EX_LETTER='To: The Account Holder\nSubject: Notice under Section 14(2) regarding arrears\n\nThis is to inform you that, pursuant to the provisions of the Electricity Supply Code, an amount of Rs. 1,284/- remains outstanding against Consumer No. 4471 0293 for the billing cycle ending 30 September. Failing remittance of the aforementioned sum on or before 5 October, a delayed payment surcharge of Rs. 50/- shall be levied, and the Company reserves the right to initiate disconnection proceedings after a further period of fifteen (15) days. Consumers who have already remitted the amount are requested to disregard this notice and furnish the transaction reference at the nearest office.';
+var docBlob=null;
+$('#docEx').addEventListener('click',function(){$('#docIn').value=EX_LETTER;docBlob=null;$('#docFn').textContent='';toast('Example letter added')});
+$('#docFile').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;docBlob=f;$('#docFn').textContent=f.name;if(!IMG&&SAMPLE)toast('Photos are not supported in this view. Paste the text instead.')});
+var docCtl=null;
+function docDemo(){return {summary:'You owe Rs 1,284 for electricity. You must pay by 5 October. If you pay late, you will pay Rs 50 extra.',says:['You have an unpaid electricity bill of Rs 1,284.','There is a late fee of Rs 50 if you pay after 5 October.','If you still do not pay, the company can cut your connection after 15 more days.','If you already paid, you can ignore this letter.'],todo:['Pay Rs 1,284 on or before 5 October.','Keep the payment receipt.','If you already paid, take the receipt number to the nearest office.'],deadlines:['5 October: last day to pay without the Rs 50 fee','15 days after that: possible disconnection'],words:[{word:'Arrears',meaning:'Money you still owe.'},{word:'Surcharge',meaning:'An extra fee added to your bill.'},{word:'Remittance',meaning:'Paying the money.'}],caution:'This is a sample result. Check the dates on your own letter.'}}
+function renderDoc(d,demo){
+  var out=$('#docOut');out.innerHTML='';
+  if(demo){var n=el('div','rc warn');n.appendChild(el('p','','Demo mode: this is a sample result for the example letter.'));out.appendChild(n)}
+  out.appendChild(section('In short',pnode(d.summary||''),'big'));
+  if(d.says&&d.says.length)out.appendChild(section('What it says',listNode(d.says)));
+  if(d.todo&&d.todo.length)out.appendChild(section('What you need to do',listNode(d.todo,true)));
+  if(d.deadlines&&d.deadlines.length)out.appendChild(section('Dates to remember',listNode(d.deadlines)));
+  if(d.words&&d.words.length){var dl=el('dl');d.words.forEach(function(w){dl.appendChild(el('dt','',String(w.word)));dl.appendChild(el('dd','',String(w.meaning)))});out.appendChild(section('Hard words explained',dl))}
+  if(d.caution)out.appendChild(section('Be careful',pnode(d.caution),'warn'));
+  out.appendChild(readBar(function(){return [d.summary].concat(['What you need to do:'],d.todo||[],d.deadlines||[]).join('. ')}));
+}
+$('#docGo').addEventListener('click',function(){
+  var txt=$('#docIn').value.trim();
+  if(!txt&&!docBlob){toast('Paste text or add a photo first');return}
+  var out=$('#docOut');
+  if(docCtl){docCtl.abort()}
+  docCtl=new AbortController();var ctl=docCtl;
+  thinking(out,'Reading your document…',function(){ctl.abort()});
+  var prompt=sys()+'\n\nTask: Explain this document to the person. Reply with ONLY a JSON object with these keys, all text in '+LANGS[S.lang].n+' at the reading level above:\n{"summary": "2 sentences max, the most important point",\n "says": ["3-5 short points about what the document says"],\n "todo": ["clear actions the person should take, in order"],\n "deadlines": ["each date or time limit with what happens"],\n "words": [{"word":"hard word from the document","meaning":"simple meaning"}],\n "caution": "one short line if there is a risk, a scam sign or a need to check with a professional, else empty string"}\n\nDocument:\n'+(txt?txt.slice(0,8000):'(see the attached photo)');
+  var opts={signal:ctl.signal};
+  if(docBlob&&IMG)opts.images=docBlob;
+  aiJson(prompt,opts).then(function(d){renderDoc(d,false)}).catch(function(e){
+    if(e&&e.code==='cancelled'){out.innerHTML='';return}
+    if(dead(e)){setStat('demo');renderDoc(docDemo(),true);return}
+    out.innerHTML='';var c=el('div','rc warn');c.appendChild(pnode(errMsg(e)));out.appendChild(c);
+  });
+});
+
+/* ---------- PHOTOS ---------- */
+var phBlob=null,phCtl=null;
+$('#phFile').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;phBlob=f;previewInto($('#phDrop'),f,'Your selected photo')});
+$('#phEx').addEventListener('click',function(){sampleImage().then(function(b){phBlob=b;phBlob._sample=true;previewInto($('#phDrop'),b,'Sample photo: a fruit stall with a price sign');toast('Sample photo added')})});
+function phDemo(){return {description:'A fruit stall under a yellow awning. Oranges, green limes and red apples sit on a table with a small price sign. A vendor stands on the right side.',text:'Rs 40',alt:'Fruit stall with a price sign and a vendor.',note:'This is a sample result.'}}
+function renderPhoto(d,demo){
+  var out=$('#phOut');out.innerHTML='';
+  if(demo){var n=el('div','rc warn');n.appendChild(pnode('Demo mode: this is a sample description.'));out.appendChild(n)}
+  out.appendChild(section('Description',pnode(d.description||''),'big'));
+  out.appendChild(section('Text in the photo',pnode(d.text&&String(d.text).trim()?d.text:'No readable text found.')));
+  var a=section('Alt text for a website',pnode(d.alt||''));var cb=btn('Copy alt text','i-copy');cb.style.marginTop='10px';cb.addEventListener('click',function(){copyText(d.alt||'')});a.appendChild(cb);out.appendChild(a);
+  if(d.note&&!demo)out.appendChild(section('Worth knowing',pnode(d.note)));
+  out.appendChild(readBar(function(){return (d.description||'')+' '+(d.text?'Text in the photo: '+d.text:'')}));
+}
+$('#phGo').addEventListener('click',function(){
+  if(!phBlob){toast('Choose a photo or use the sample first');return}
+  var out=$('#phOut');
+  if(!SAMPLE||!IMG){setStat('demo');renderPhoto(phDemo(),true);return}
+  if(phCtl)phCtl.abort();phCtl=new AbortController();var ctl=phCtl;
+  thinking(out,'Looking at your photo…',function(){ctl.abort()});
+  var prompt=sys()+'\n\nTask: Describe the attached photo for a person who cannot see it. Reply with ONLY a JSON object, text in '+LANGS[S.lang].n+':\n{"description": "clear description in 2-4 sentences: who or what, where, colours, and what is happening",\n "text": "any readable text in the photo, exactly as written, or empty string",\n "alt": "alt text of at most 125 characters",\n "note": "one short line only if something important or unsafe is visible, else empty string"}';
+  aiJson(prompt,{signal:ctl.signal,images:phBlob}).then(renderPhoto.bind(null)).catch(function(e){
+    if(e&&e.code==='cancelled'){out.innerHTML='';return}
+    if(dead(e)||(e&&(e.code==='images_unavailable'))){setStat('demo');renderPhoto(phDemo(),true);return}
+    out.innerHTML='';var c=el('div','rc warn');c.appendChild(pnode(errMsg(e)));out.appendChild(c);
+  });
+});
+
+/* ---------- CAPTIONS ---------- */
+var capRec=null,capFinal='',capSampTimer=null;
+function capDraw(im){var box=$('#capBox');box.textContent=capFinal;if(im){var s=el('span','im',im);box.appendChild(s)}box.scrollTop=1e9}
+$('#capGo').addEventListener('click',function(){
+  var b=this,sp=b.querySelector('span');
+  if(capRec){capRec.stop();return}
+  if(!SR){$('#capNote').textContent='Speech recognition is not supported in this browser. Try Chrome or Edge, or press “Play sample captions”.';return}
+  clearInterval(capSampTimer);
+  capRec=recog({continuous:true,onText:function(f,i){if(f)capFinal+=(capFinal?' ':'')+f.trim();capDraw(i)},onError:function(c){$('#capNote').textContent=micErr(c)+' You can still press “Play sample captions”.'},onEnd:function(){if(capRec&&capRec._keep){try{capRec.start();return}catch(e){}}capRec=null;sp.textContent='Start captions';$('#capNote').textContent=$('#capNote').textContent||''}});
+  capRec._keep=true;$('#capNote').textContent='';
+  try{capRec.start();sp.textContent='Stop captions'}catch(e){capRec=null}
+  var stopOrig=capRec.stop.bind(capRec);capRec.stop=function(){capRec._keep=false;stopOrig();sp.textContent='Start captions'};
+});
+$('#capSample').addEventListener('click',function(){
+  if(capRec){capRec._keep=false;capRec.stop()}
+  clearInterval(capSampTimer);capFinal='';capDraw('');
+  var words=('Good morning, everyone. Today we will learn how plants make their own food. Please open your books to page twenty four. आज हम सीखेंगे कि पौधे सूरज की रोशनी से भोजन कैसे बनाते हैं।').split(' '),i=0;
+  capSampTimer=setInterval(function(){if(i>=words.length){clearInterval(capSampTimer);return}capFinal+=(capFinal?' ':'')+words[i++];capDraw('')},260);
+  $('#capNote').textContent='Playing a sample so you can see how captions look.';
+});
+$('#capClear').addEventListener('click',function(){clearInterval(capSampTimer);capFinal='';capDraw('')});
+$('#capCopy').addEventListener('click',function(){if(!capFinal){toast('Nothing to copy yet');return}copyText(capFinal)});
+function saveFile(name,data){
+  if(!(window.claude&&window.claude.use)){toast('Download is not available here. Use Copy instead.');return}
+  window.claude.use('downloads').then(function(d){if(!d){toast('Download is not available here. Use Copy instead.');return}return d.save({filename:name,data:data})}).catch(function(e){if(!e||e.code!=='declined')toast('Could not save the file. Use Copy instead.')});
+}
+$('#capSave').addEventListener('click',function(){if(!capFinal){toast('Nothing to save yet');return}saveFile('captions.txt',capFinal)});
+
+/* ---------- WEBSITE CHECK ---------- */
+var EX_HTML='<html>\n<head>\n<meta name="viewport" content="width=device-width, user-scalable=no">\n</head>\n<body>\n<h1>City Services</h1>\n<h3>Pay your bill</h3>\n<img src="bill.png">\n<input placeholder="Account number">\n<a href="/pay">click here</a>\n<button style="color:#999;background:#aaa"></button>\n<p style="color:#aaa;background:#fff">Late fee applies after 5 October.</p>\n</body>\n</html>';
+$('#webEx').addEventListener('click',function(){$('#webIn').value=EX_HTML;toast('Example page added')});
+function parseColor(s){if(!s)return null;s=s.trim().toLowerCase();var NAMES={white:'#ffffff',black:'#000000',gray:'#808080',grey:'#808080',red:'#ff0000',blue:'#0000ff',green:'#008000',yellow:'#ffff00',silver:'#c0c0c0'};if(NAMES[s])s=NAMES[s];var m;
+  if((m=s.match(/^#([0-9a-f]{3})$/))){var h=m[1];return [parseInt(h[0]+h[0],16),parseInt(h[1]+h[1],16),parseInt(h[2]+h[2],16)]}
+  if((m=s.match(/^#([0-9a-f]{6})$/))){return [parseInt(m[1].slice(0,2),16),parseInt(m[1].slice(2,4),16),parseInt(m[1].slice(4,6),16)]}
+  if((m=s.match(/^rgb\(\s*(\d+)[ ,]+(\d+)[ ,]+(\d+)/)))return [+m[1],+m[2],+m[3]];return null}
+function lum(c){var a=c.map(function(v){v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*a[0]+.7152*a[1]+.0722*a[2]}
+function ratio(a,b){var x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
+function styleProp(st,p){var m=(st||'').match(new RegExp('(?:^|;)\\s*'+p+'\\s*:\\s*([^;]+)','i'));return m?m[1]:null}
+function checkHTML(html){
+  var doc=new DOMParser().parseFromString(html,'text/html'),I=[];
+  function add(sev,title,ref){I.push({sev:sev,title:title,ref:ref})}
+  var h=doc.documentElement;
+  if(!h.getAttribute('lang'))add('s','The page language is not set','WCAG 3.1.1');
+  if(!doc.title||!doc.title.trim())add('m','The page has no title','WCAG 2.4.2');
+  var vp=doc.querySelector('meta[name="viewport"]');if(vp&&/user-scalable\s*=\s*(no|0)|maximum-scale\s*=\s*1(\.0)?\b/i.test(vp.getAttribute('content')||''))add('s','Zooming is disabled, which blocks low-vision users','WCAG 1.4.4');
+  $$('img',doc).forEach(function(im){if(!im.hasAttribute('alt'))add('c','Image has no alt text: '+(im.getAttribute('src')||'(no source)'),'WCAG 1.1.1')});
+  $$('input,select,textarea',doc).forEach(function(x){var t=(x.getAttribute('type')||'').toLowerCase();if(t==='hidden'||t==='submit'||t==='button')return;var id=x.id,has=x.getAttribute('aria-label')||x.getAttribute('aria-labelledby')||x.getAttribute('title')||(id&&doc.querySelector('label[for="'+id+'"]'))||x.closest('label');if(!has)add('c','Form field has no label'+(x.getAttribute('placeholder')?' (only a placeholder: “'+x.getAttribute('placeholder')+'”)':''),'WCAG 3.3.2')});
+  $$('button,a[href]',doc).forEach(function(x){var txt=(x.textContent||'').trim(),nm=x.getAttribute('aria-label')||x.getAttribute('title')||(x.querySelector('img[alt]:not([alt=""])')?'y':'');if(!txt&&!nm)add('c',(x.tagName==='A'?'Link':'Button')+' has no accessible name','WCAG 4.1.2');else if(/^(click here|here|read more|more)$/i.test(txt))add('m','Link text “'+txt+'” does not say where it goes','WCAG 2.4.4')});
+  var last=0;$$('h1,h2,h3,h4,h5,h6',doc).forEach(function(x){var n=+x.tagName[1];if(last&&n>last+1)add('m','Heading level jumps from h'+last+' to h'+n,'WCAG 1.3.1');last=n});
+  $$('[tabindex]',doc).forEach(function(x){if(+x.getAttribute('tabindex')>0)add('m','Positive tabindex breaks the natural tab order','WCAG 2.4.3')});
+  $$('[style]',doc).forEach(function(x){var st=x.getAttribute('style'),fg=parseColor(styleProp(st,'color')),bg=parseColor(styleProp(st,'background-color')||styleProp(st,'background'));if(fg&&bg){var r=ratio(fg,bg);if(r<4.5)add('s','Low text contrast ('+r.toFixed(1)+' to 1, needs 4.5 to 1)','WCAG 1.4.3')}});
+  var pen={c:14,s:8,m:4},sc=100;I.forEach(function(i){sc-=pen[i.sev]});
+  return {issues:I,score:Math.max(0,Math.min(100,sc))};
+}
+function autoFix(html){
+  var doc=new DOMParser().parseFromString(html,'text/html');
+  doc.documentElement.setAttribute('lang','en');
+  if(!doc.title){var t=doc.createElement('title');t.textContent=(doc.querySelector('h1')||{}).textContent||'Page';doc.head.appendChild(t)}
+  var vp=doc.querySelector('meta[name="viewport"]');if(vp)vp.setAttribute('content','width=device-width, initial-scale=1');
+  $$('img',doc).forEach(function(im){if(!im.hasAttribute('alt'))im.setAttribute('alt','Image: '+((im.getAttribute('src')||'').split('/').pop()||'illustration'))});
+  $$('input,select,textarea',doc).forEach(function(x){var t=(x.getAttribute('type')||'').toLowerCase();if(t==='hidden'||t==='submit'||t==='button')return;if(!x.getAttribute('aria-label')&&!(x.id&&doc.querySelector('label[for="'+x.id+'"]'))&&!x.closest('label'))x.setAttribute('aria-label',x.getAttribute('placeholder')||'Input')});
+  $$('button,a[href]',doc).forEach(function(x){if(!(x.textContent||'').trim()&&!x.getAttribute('aria-label'))x.setAttribute('aria-label','Button');if(/^(click here|here)$/i.test((x.textContent||'').trim()))x.textContent='Go to this page'});
+  $$('[style]',doc).forEach(function(x){var st=x.getAttribute('style'),fg=parseColor(styleProp(st,'color')),bg=parseColor(styleProp(st,'background-color')||styleProp(st,'background'));if(fg&&bg&&ratio(fg,bg)<4.5)x.setAttribute('style',st.replace(/(^|;)\s*color\s*:[^;]+/i,'$1color:#111111').replace(/background-color\s*:[^;]+/i,'background-color:#ffffff'))});
+  return '<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
+}
+function renderScore(box,title,res){
+  var w=el('div','rc');w.appendChild(el('h3','',title));
+  var rw=el('div','ringw');var rg=el('div','ring');
+  rg.innerHTML='<svg viewBox="0 0 120 120" aria-hidden="true"><circle class="a" cx="60" cy="60" r="52"/><circle class="b" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg><b></b>';
+  rg.querySelector('b').textContent=res.score;rg.setAttribute('role','img');rg.setAttribute('aria-label','Score '+res.score+' out of 100');
+  rw.appendChild(rg);
+  var t=el('div');t.appendChild(el('h4','',res.score>=90?'Passes the automated checks':(res.score>=60?'Needs some work':'Needs a lot of work')));t.lastChild.style.fontSize='1.3rem';t.appendChild(el('p','hint',res.issues.length?res.issues.length+' issue'+(res.issues.length>1?'s':'')+' found':'No issues found by these checks'));rw.appendChild(t);w.appendChild(rw);
+  setTimeout(function(){var c=rg.querySelector('.b');if(c)c.setAttribute('stroke-dashoffset',(326.7*(1-res.score/100)).toFixed(1))},60);
+  var sevName={c:'Critical',s:'Serious',m:'Moderate'};
+  res.issues.forEach(function(i){var r=el('div','iss');r.appendChild(el('span','tg '+i.sev,sevName[i.sev]));var d=el('div');d.appendChild(el('div','',i.title));d.appendChild(el('code','',i.ref));r.appendChild(d);w.appendChild(r)});
+  box.appendChild(w);
+}
+var webCtl=null,lastHTML='',lastScore=0;
+function showFix(box,fixed,demo){
+  var res=checkHTML(fixed);
+  if(demo){var n=el('div','rc warn');n.appendChild(pnode('Demo mode: these are automatic fixes made by simple rules, not by AI.'));box.appendChild(n)}
+  renderScore(box,'After fixes (re-checked by the same tests)',res);
+  var c=el('div','rc');c.appendChild(el('h3','','Fixed code'));var pre=el('pre','code');pre.textContent=fixed;pre.tabIndex=0;pre.setAttribute('aria-label','Fixed HTML code');c.appendChild(pre);
+  var tb=el('div','rtb');tb.style.marginTop='10px';var cp=btn('Copy code','i-copy');cp.addEventListener('click',function(){copyText(fixed)});var dl=btn('Download .html','i-down');dl.addEventListener('click',function(){saveFile('fixed-page.html',fixed)});tb.appendChild(cp);tb.appendChild(dl);c.appendChild(tb);
+  if(res.score>lastScore)c.appendChild(el('p','note','Score improved from '+lastScore+' to '+res.score+'.'));
+  box.appendChild(c);
+}
+$('#webGo').addEventListener('click',function(){
+  var html=$('#webIn').value.trim();if(!html){toast('Paste some HTML first');return}
+  var out=$('#webOut');out.innerHTML='';lastHTML=html;
+  var res=checkHTML(html);lastScore=res.score;
+  renderScore(out,'Your page',res);
+  var fx=el('div','crow');var fb=btn(SAMPLE?'Fix with AI':'Fix automatically','i-wand','gold');fx.appendChild(fb);out.appendChild(fx);
+  var fixBox=el('div','res');out.appendChild(fixBox);
+  fb.addEventListener('click',function(){
+    fixBox.innerHTML='';
+    if(!SAMPLE){setStat('demo');showFix(fixBox,autoFix(lastHTML),true);return}
+    if(webCtl)webCtl.abort();webCtl=new AbortController();var ctl=webCtl;
+    thinking(fixBox,'Writing the fixed page…',function(){ctl.abort()});
+    var prompt='Fix every accessibility problem (WCAG 2.2 AA) in this HTML. Keep the same design and content. Add a lang attribute, a title, meaningful alt text, labels for inputs, accessible names for buttons and links, readable colour contrast (at least 4.5:1), and allow zooming. Reply with ONLY the complete corrected HTML. No explanation, no code fence.\n\n'+lastHTML.slice(0,20000);
+    ai(prompt,{signal:ctl.signal,modelTier:'default'}).then(function(r){var t=r.text.trim().replace(/^```(?:html)?\s*/i,'').replace(/```\s*$/,'');fixBox.innerHTML='';showFix(fixBox,t,false)}).catch(function(e){
+      if(e&&e.code==='cancelled'){fixBox.innerHTML='';return}
+      fixBox.innerHTML='';
+      if(dead(e)){setStat('demo');showFix(fixBox,autoFix(lastHTML),true);return}
+      var c=el('div','rc warn');c.appendChild(pnode(errMsg(e)));fixBox.appendChild(c);
+    });
+  });
+});
+
+/* ---------- WHY list ---------- */
+var WHY=[
+ ['“The letter from the bank is in hard English.”','Paste it, get what it says and what to do.',function(){S.lv=1;apply();showTab('doc');$('#docIn').value=EX_LETTER;go()}],
+ ['“Someone sent me a photo and I cannot see it.”','Get a clear description and any text in the picture.',function(){showTab('photo');go()}],
+ ['“I cannot hear the lecture or the call.”','Live captions in large type.',function(){showTab('cap');go()}],
+ ['“Typing is hard for me. I would rather talk.”','Speak your question and listen to the answer.',function(){S.auto=true;apply();showTab('ask');go()}],
+ ['“English is not my first language.”','Ask and listen in Hindi, Marathi and five more.',function(){S.lang='hi';apply();showTab('ask');go()}],
+ ['“Long answers wear me out.”','Choose Very simple and get one idea per sentence.',function(){S.lv=2;S.fs=130;apply();showTab('ask');go()}],
+ ['“I build websites. I want them to work for everyone.”','Paste your HTML and get a score and a fixed version.',function(){showTab('web');$('#webIn').value=EX_HTML;go()}]
+];
+function go(){document.getElementById('try').scrollIntoView({behavior:S.mot?'auto':'smooth'});if(window.matchMedia&&matchMedia('(max-width:940px)').matches)$('#setBox').removeAttribute('open')}
+var wl=$('#whyList');WHY.forEach(function(w){var li=el('li');var d=el('div');d.appendChild(el('q','',w[0]));d.appendChild(el('span','',w[1]));li.appendChild(d);var b=el('button','btn sm','Try it');b.type='button';b.setAttribute('aria-label','Try it: '+w[0].replace(/[“”]/g,''));b.addEventListener('click',w[2]);li.appendChild(b);wl.appendChild(li)});
+
+apply();
+})();
+</script>
+</body>
+</html>

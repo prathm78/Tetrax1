@@ -1,0 +1,17 @@
+{
+  "name": "Samavesh AI",
+  "short_name": "Samavesh",
+  "description": "AI that works the way you do - Accessible, Multilingual AI Assistant",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050914",
+  "theme_color": "#050914",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

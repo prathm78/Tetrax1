@@ -1,0 +1,42 @@
+/* Design System Tokens */
+:root {
+  /* Neutral & Base Palette */
+  --paper: #F6F8FB;
+  --surface: #FFFFFF;
+  --sunken: #EDF1F7;
+  --line: #D9E1EC;
+  --ink: #0B1226;
+  --muted: #46536A;
+
+  /* Accent & Intent Palette */
+  --gold: #FFB020;
+  --goldtx: #8A5A00;
+  --ongold: #0B1226;
+  --green: #0B7A6D;
+  --red: #C9263B;
+  --redbg: #FDECEE;
+  --greenbg: #E3F5F2;
+  --goldbg: #FFF3D6;
+
+  /* Dark Navy Scale */
+  --n0: #050914;
+  --n1: #0A1122;
+  --n2: #10192F;
+  --n3: #1B2744;
+  --nm: #9DAAC6;
+  --ngold: #FFB84D;
+
+  /* Typography & Sizing */
+  --fs: 1;
+  --lh: 1.65;
+  --ls: 0em;
+  --ws: 0em;
+
+  --body: 'Atkinson Hyperlegible', 'Noto Sans Devanagari', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --head: 'Schibsted Grotesk', 'Noto Sans Devanagari', 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}

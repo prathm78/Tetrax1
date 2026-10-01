@@ -1,0 +1,138 @@
+/* Base Styles & Typography */
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+html {
+  font-size: calc(100% * var(--fs));
+  scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px));
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: var(--lh);
+  letter-spacing: var(--ls);
+  word-spacing: var(--ws);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Dyslexia Mode */
+body.dys {
+  --body: 'Lexend', 'Noto Sans Devanagari', sans-serif;
+  --ls: 0.035em;
+  --lh: 1.9;
+  --ws: 0.12em;
+}
+
+/* Reduce Motion */
+body.still *, body.still *::before, body.still *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Headings & Text */
+h1, h2, h3, h4 {
+  font-family: var(--head);
+  margin: 0;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+ul, ol, dl, dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* Focus States (WCAG 2.2 AA) */
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--gold);
+  border-radius: 6px;
+}
+
+.dk :focus-visible {
+  outline-color: #ffffff;
+}
+
+/* Screen Reader Only Utility */
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Skip-to-content Link */
+.skip {
+  position: absolute;
+  left: 12px;
+  top: -70px;
+  z-index: 300;
+  background: var(--gold);
+  color: var(--ongold);
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: top 0.15s ease-out;
+}
+
+.skip:focus {
+  top: calc(10px + env(safe-area-inset-top, 0px));
+}
+
+/* Container */
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* SVG icons */
+svg.i {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sp {
+  flex: 1;
+}
+
+.note {
+  margin-top: 14px;
+  font-size: 0.88rem;
+  color: var(--muted);
+}

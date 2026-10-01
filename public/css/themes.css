@@ -1,0 +1,54 @@
+/* Dark & High Contrast Themes */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="yellow"]) {
+    --paper: #080D1B;
+    --surface: #0E162B;
+    --sunken: #0B1224;
+    --line: #26324F;
+    --ink: #F2F5FA;
+    --muted: #A9B5CC;
+    --gold: #FFB84D;
+    --goldtx: #FFB84D;
+    --ongold: #0B1226;
+    --green: #3DD6C0;
+    --red: #FF7A8A;
+    --redbg: #3A1620;
+    --greenbg: #0F2B2B;
+    --goldbg: #2E2410;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #080D1B;
+  --surface: #0E162B;
+  --sunken: #0B1224;
+  --line: #26324F;
+  --ink: #F2F5FA;
+  --muted: #A9B5CC;
+  --gold: #FFB84D;
+  --goldtx: #FFB84D;
+  --ongold: #0B1226;
+  --green: #3DD6C0;
+  --red: #FF7A8A;
+  --redbg: #3A1620;
+  --greenbg: #0F2B2B;
+  --goldbg: #2E2410;
+}
+
+:root[data-theme="yellow"] {
+  --paper: #000000;
+  --surface: #000000;
+  --sunken: #0A0A0A;
+  --line: #FFE600;
+  --ink: #FFE600;
+  --muted: #FFFFFF;
+  --gold: #FFE600;
+  --goldtx: #FFE600;
+  --ongold: #000000;
+  --green: #00FFD0;
+  --red: #FF9AA5;
+  --redbg: #1a0004;
+  --greenbg: #001a14;
+  --goldbg: #1a1700;
+}
